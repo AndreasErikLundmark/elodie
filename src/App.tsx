@@ -2,6 +2,7 @@ import './App.css'
 import bg from '../src/assets/images/atendbg.png'
 
 function App() {
+
   const coverAttheEnd = {
     backgroundImage: `url(${bg})`,
     backgroundPosition: 'center',
@@ -10,11 +11,14 @@ function App() {
   
   return (
     <div className="w-full h-screen bg-white">
-      <div className="header flex justify-center items-center">
+      {/* Header */}
+      <div className="header flex justify-center items-center py-4">
         <h1 className="text-black">élodie</h1>
       </div>
-      <div className="main flex justify-center items-center h-full w-full">
-        {/* Box with background image, padding around the background, and border outside */}
+  
+      {/* Main content */}
+      <div className="flex flex-col justify-center items-center h-full space-y-6">
+        {/* Cover box */}
         <div className="h-[300px] w-[300px] border-4 border-solid border-black p-4">
           <div
             className="h-full w-full bg-cover"
@@ -27,10 +31,20 @@ function App() {
             </div>
           </div>
         </div>
+  
+        {/* Buttons under the cover box */}
+        <div className="join flex space-x-4 bg-white">
+          <button className="join-item btn bg-white border-none p-4 hover:bg-gray-300 text-black">#1</button>
+          <button className="join-item btn bg-white border-none p-4 hover:bg-gray-300 text-black">#2</button>
+          <button className="join-item btn bg-white border-none p-4 hover:bg-gray-300 text-black">#3</button>
+          <button className="join-item btn bg-white border-none p-4 hover:bg-gray-300 text-black">#4</button>
+          <button className="join-item btn bg-white border-none p-4 hover:bg-gray-300 text-black">#5</button>
+        </div>
       </div>
     </div>
   );
   
+
   
 }
 
