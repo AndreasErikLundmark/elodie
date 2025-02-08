@@ -29,7 +29,23 @@
 
   /* birds */
 
-  
+  .bird-container {
+    position: absolute;
+    top: 6%;
+    left: -3%;
+    transform: scale(0) translateX(-10vw);
+    will-change: transform;
+    transition: all 0.3s ease;
+}
+
+/* This class triggers the animation */
+.bird-container.animate {
+    animation-name: fly-right-one;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+
   .bird{
     background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/174479/bird-cells-new.svg');
     /* Reduced grayish filters */
@@ -64,7 +80,7 @@
     animation-delay: -0.5s;
 }
 
-.bird-container {
+/* .bird-container {
 	position: absolute;
 	top: 6%;
   left: -3%;
@@ -75,7 +91,7 @@
 	animation-timing-function: linear;
 	animation-iteration-count: infinite;
 }
-	
+	 */
 .bird-container-one{
 	animation-duration: 15s;
 	animation-delay: 0;

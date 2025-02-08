@@ -1,21 +1,31 @@
 
 
-export default function Birds() {
+export default function Birds({ isPlaying }) {
+
+    console.log("checking state in birds" + isPlaying);
      
     return(
         <div>
-            <div className="bird-container bird-container-one">
-                <div className="bird bird-one"></div>
-            </div>        
-            <div className="bird-container bird-container-two">
-                <div className="bird bird-two"></div>
-            </div>  
-            <div className="bird-container bird-container-three">
-                <div className="bird bird-three"></div>
-            </div> 
-            <div className="bird-container bird-container-four">
-                <div className="bird bird-four"></div>
-            </div>
+        {/* Bird container 1 */}
+        <div className={`bird-container bird-container-one ${isPlaying ? 'animate' : ''}`}>
+          <div className="bird bird-one"></div>
+        </div>        
+        
+        {/* Bird container 2 */}
+        <div className={`bird-container bird-container-two ${isPlaying ? 'animate' : ''}`}>
+          <div className="bird bird-two"></div>
+        </div>  
+        
+        {/* Bird container 3 */}
+        <div className={`bird-container bird-container-three ${isPlaying ? 'animate' : ''}`}>
+          <div className="bird bird-three"></div>
+        </div> 
+        
+        {/* Bird container 4 */}
+        <div className={`bird-container bird-container-four ${isPlaying ? 'animate' : ''}`}>
+          <div className="bird bird-four"></div>
         </div>
+      </div>
+      
      );
 }
