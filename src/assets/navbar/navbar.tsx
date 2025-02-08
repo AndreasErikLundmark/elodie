@@ -1,13 +1,22 @@
 import { useState } from 'react';
+import { IoIosPause, IoIosPlay } from "react-icons/io";
 
-export default function Navbar() {
-  const [isFoldoutOpen, setFoldoutOpen] = useState(false);
+interface NavbarProps {
+    isMusicPlaying: boolean;
+  onPlayPause: () => void;
+}
+
+export default function Navbar({ isMusicPlaying, onPlayPause }: NavbarProps) {
+    const [isFoldoutOpen, setFoldoutOpen] = useState(false);
 
   return (
     <div className="w-full bg-transparent text-black text-lg">
       {/* Navbar container */}
       <div className="relative flex justify-between items-center py-4 px-8">
-        {/* Centered "élodie" text with absolute positioning */}
+        {/* Play/Pause Button */}
+        <button onClick={onPlayPause} className="text-2xl">
+          {isMusicPlaying ? <IoIosPause /> : <IoIosPlay />}
+        </button>
         <div className="absolute left-1/2 transform -translate-x-1/2">
           <h1 className="text-black text-xl font-bold">élodie</h1>
         </div>
