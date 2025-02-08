@@ -4,9 +4,10 @@ import { IoIosPause, IoIosPlay } from "react-icons/io";
 interface NavbarProps {
     isMusicPlaying: boolean;
   onPlayPause: () => void;
+  audioSource: string | null;
 }
 
-export default function Navbar({ isMusicPlaying, onPlayPause }: NavbarProps) {
+export default function Navbar({ isMusicPlaying, onPlayPause, audioSource }: NavbarProps) {
     const [isFoldoutOpen, setFoldoutOpen] = useState(false);
 
   return (
@@ -14,7 +15,11 @@ export default function Navbar({ isMusicPlaying, onPlayPause }: NavbarProps) {
       {/* Navbar container */}
       <div className="relative flex justify-between items-center py-4 px-8">
         {/* Play/Pause Button */}
-        <button onClick={onPlayPause} className="text-2xl">
+        <button
+  onClick={onPlayPause}
+  className={`text-2xl ${audioSource === null ? 'text-gray-400 cursor-not-allowed' : ''}`}
+  disabled={audioSource === null}
+>
           {isMusicPlaying ? <IoIosPause /> : <IoIosPlay />}
         </button>
         <div className="absolute left-1/2 transform -translate-x-1/2">
@@ -30,7 +35,7 @@ export default function Navbar({ isMusicPlaying, onPlayPause }: NavbarProps) {
             className="relative"
           >
             {/* Summary with custom arrow, no default arrow */}
-            <summary className="cursor-pointer text-lg text-black list-none">
+            <summary className="cursor-pointer text-lg text-black list-none font-bold">
               <span className="ml-2">
                 {/* Custom arrow */}
                 {isFoldoutOpen ? '...' : '..'}
