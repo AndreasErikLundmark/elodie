@@ -3,6 +3,7 @@ import bg from '../src/assets/images/atendbg.png'
 import { ButtonFold } from './assets/buttons/buttonFold';
 import { useState } from 'react';
 import Navbar from './assets/navbar/navbar';
+import Birds from './assets/birds/birds';
 
 function App() {
   const [activeButton, setActiveButton] = useState(null);
@@ -22,13 +23,9 @@ function App() {
   ].map((button) => (
     <li key={button.id} className="m-2 text-gray-800 hover:text-gray-500 transition duration-300">
       <button
-        // Dynamically apply font-bold if the button is the active one
         className={`radioButton ${activeButton === button.id ? 'font-bold text-black' : ''} transition duration-300`}
         onClick={() => {
-          setActiveButton(button.id); // Update active button state to the clicked button
-          // Add your audio playing logic here if needed
-          // audioElement.current.src = button.src;
-          // audioElement.current.play();
+          setActiveButton(button.id);
         }}
       >
         {button.title}
@@ -40,14 +37,13 @@ function App() {
     <div className="w-full h-screen bg-white">
       {/* Header */}
       <div className="header flex justify-center items-center py-4">
-        {/* <h1 className="text-black font-bold text-lg">élodie</h1> */}
         <Navbar />
       </div>
-
+      <Birds />
       {/* Main content */}
-      <div className="flex flex-col justify-center items-center h-full space-y-6">
+      <div className="flex flex-col items-center h-full space-y-6">
         {/* Cover box */}
-        <div className="h-[300px] w-[300px] border-4 border-solid border-black p-4">
+        <div className="min-h-[300px] min-w-[300px] max-h-[300px] max-w-[300px] border-4 border-solid border-black p-4 mt-12 flex-shrink-0">
           <div
             className="h-full w-full bg-cover"
             style={coverAttheEnd}
@@ -55,7 +51,6 @@ function App() {
             {/* Content inside the padded background */}
           </div>
         </div>
-
         <ButtonFold />
 
         <div className="" id="foldOut">
@@ -63,8 +58,8 @@ function App() {
             {buttonList}
           </ul>
         </div>
-
       </div>
+    
     </div>
   );
 }
