@@ -1,21 +1,49 @@
 import './App.css'
 import bg from '../src/assets/images/atendbg.png'
+import { ButtonFold } from './assets/buttons/buttonFold';
+import { useState } from 'react';
+import Navbar from './assets/navbar/navbar';
 
 function App() {
+  const [activeButton, setActiveButton] = useState(null);
 
   const coverAttheEnd = {
     backgroundImage: `url(${bg})`,
     backgroundPosition: 'center',
     backgroundSize: 'cover',
   };
-  
+
+  const buttonList = [
+    { id: 1, title: "1. Be My Ghost" },
+    { id: 2, title: "2. At the End of the Line" },
+    { id: 3, title: "3. Mandarine #2" },
+    { id: 4, title: "4. Make-up killers" },
+    { id: 5, title: "5. Overload" },
+  ].map((button) => (
+    <li key={button.id} className="m-2 text-gray-800 hover:text-gray-500 transition duration-300">
+      <button
+        // Dynamically apply font-bold if the button is the active one
+        className={`radioButton ${activeButton === button.id ? 'font-bold text-black' : ''} transition duration-300`}
+        onClick={() => {
+          setActiveButton(button.id); // Update active button state to the clicked button
+          // Add your audio playing logic here if needed
+          // audioElement.current.src = button.src;
+          // audioElement.current.play();
+        }}
+      >
+        {button.title}
+      </button>
+    </li>
+  ));
+
   return (
     <div className="w-full h-screen bg-white">
       {/* Header */}
       <div className="header flex justify-center items-center py-4">
-        <h1 className="text-black">élodie</h1>
+        {/* <h1 className="text-black font-bold text-lg">élodie</h1> */}
+        <Navbar />
       </div>
-  
+
       {/* Main content */}
       <div className="flex flex-col justify-center items-center h-full space-y-6">
         {/* Cover box */}
@@ -25,27 +53,20 @@ function App() {
             style={coverAttheEnd}
           >
             {/* Content inside the padded background */}
-            <div className="text-white p-4">
-              <h2 className="text-5xl">At the End</h2>
-              <p className="text-2xl">by élodie</p>
-            </div>
           </div>
         </div>
-  
-        {/* Buttons under the cover box */}
-        <div className="join flex space-x-4 bg-white">
-          <button className="join-item btn bg-white border-none p-4 hover:bg-gray-300 text-black">#1</button>
-          <button className="join-item btn bg-white border-none p-4 hover:bg-gray-300 text-black">#2</button>
-          <button className="join-item btn bg-white border-none p-4 hover:bg-gray-300 text-black">#3</button>
-          <button className="join-item btn bg-white border-none p-4 hover:bg-gray-300 text-black">#4</button>
-          <button className="join-item btn bg-white border-none p-4 hover:bg-gray-300 text-black">#5</button>
+
+        <ButtonFold />
+
+        <div className="" id="foldOut">
+          <ul className="radioButtons">
+            {buttonList}
+          </ul>
         </div>
+
       </div>
     </div>
   );
-  
-
-  
 }
 
-export default App
+export default App;
