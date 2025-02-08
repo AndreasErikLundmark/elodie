@@ -15,6 +15,7 @@ function App() {
   const [activeButton, setActiveButton] = useState<number | null>(null);
   const [isMusicPlaying, setIsMusicPlaying] = useState(false);
   const [audioSource, setAudioSource] = useState<string | null>(null);
+  const [songIndex, setSongIndex] = useState<number>(0); 
   
   const audioRef = useRef<HTMLAudioElement | null>(null); // Reference to the audio player
 
@@ -56,14 +57,19 @@ function App() {
     }
   };
 
+  const handleSongEnd = () => {
+    const nextSongIndex = (songIndex + 1) % buttonList.length;
+    setSongIndex(nextSongIndex); 
+    setAudioSource(buttonList[nextSongIndex].song); 
+    setIsMusicPlaying(true); 
+  };
+
   return (
     <div className="w-full h-screen bg-white">
       <div className="header flex justify-center items-center py-4">
-        <Navbar isMusicPlaying={isMusicPlaying} onPlayPause={toggleAudio} />
+        <Navbar isMusicPlaying={isMusicPlaying} onPlayPause={toggleAudio} audioSource={audioSource} />
       </div>
       <Birds isPlaying={isMusicPlaying} />
-
- 
 
       <div className="flex flex-col items-center h-full space-y-6">
         <div className="min-h-[300px] min-w-[300px] max-h-[300px] max-w-[300px] border-4 border-solid border-black p-4 mt-12 flex-shrink-0">
@@ -88,7 +94,7 @@ function App() {
           autoPlay={isMusicPlaying} 
           onPlay={() => setIsMusicPlaying(true)} 
           onPause={() => setIsMusicPlaying(false)} 
-          onEnded={() => setIsMusicPlaying(false)} 
+          onEnded={handleSongEnd} 
         >
           Your browser does not support the audio element.
         </audio>
