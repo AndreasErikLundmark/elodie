@@ -19,6 +19,7 @@ to deploy
 #npm run docker:push  
 #npm run docker:deploy
 ```
+<img width="403" alt="Screenshot 2025-02-09 at 20 51 47" src="https://github.com/user-attachments/assets/57e5910d-631a-486b-b168-e59619e8b76c" />
 
 
 <img width="436" alt="elodie-screenshot" src="https://github.com/user-attachments/assets/5740eab3-c91c-4b57-97c3-ed68ba36a3ff" />
