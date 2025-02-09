@@ -23,7 +23,7 @@ export default function Navbar({ isMusicPlaying, onPlayPause, audioSource }: Nav
           {isMusicPlaying ? <IoIosPause /> : <IoIosPlay />}
         </button>
         <div className="absolute left-1/2 transform -translate-x-1/2">
-        <h1 className="text-black text-xl font-bold" style={{ letterSpacing: "0.1em" }}>élodie</h1>
+        <h1 className="text-black text-2xl font-bold" style={{ letterSpacing: "0.1em" }}>élodie</h1>
         </div>
 
         {/* Navbar menu items (right aligned) */}
@@ -44,7 +44,7 @@ export default function Navbar({ isMusicPlaying, onPlayPause, audioSource }: Nav
 
             {/* Foldout Menu Content */}
             <ul
-              className={`bg-[#f8f8f8] text-black p-2 shadow-none border-solid border-1 border-black z-50 transition-opacity duration-500 ease-in-out ${
+              className={`bg-gray-950 opacity-95 rounded-md z-1 text-gray-300 p-4 shadow-none border-solid border-1 border-black z-50 transition-opacity duration-500 ease-in-out ${
                 isFoldoutOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
               }`}
               style={{
