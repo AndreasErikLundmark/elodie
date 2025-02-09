@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import './App.css';
 import bg from '../src/assets/images/atendbg.png';
+import bgMain from '../src/assets/images/lake.png';
 import { ButtonFold } from './assets/buttons/buttonFold';
 import Navbar from './assets/navbar/navbar';
 import Birds from './assets/birds/birds';
@@ -88,7 +89,12 @@ const App = () => {
   return (
     <div
       ref={divRef}
-      className="w-full h-screen bg-[#f8f8f8] relative"
+      className="w-full h-screen bg-[#f8f8f8] relative "   style={{
+        backgroundImage: `url(${bgMain})`,
+        backgroundSize: 'cover',  // Ensures the image covers the screen
+        backgroundRepeat: 'no-repeat',  // Prevents image repetition
+        backgroundPosition: 'center',  // Centers the image
+      }}
       onMouseMove={(e) => {
         if (!divRef.current) return;
         const div = divRef.current;
@@ -99,7 +105,7 @@ const App = () => {
       onMouseLeave={() => setOpacity(0)}
     >
       <div
-        className="pointer-events-none absolute inset-0 transition duration-300"
+        className="pointer-events-none absolute inset-0 transition duration-300 "
         style={{
           opacity,
           background: `radial-gradient(400px circle at ${position.x}px ${position.y}px, rgba(255,255,255,0.8), rgba(255,255,255,0) 50%)`,
