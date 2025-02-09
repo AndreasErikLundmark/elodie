@@ -10,6 +10,7 @@ import song2 from './assets/mp3/2 - élodie.mp3';
 import song3 from './assets/mp3/3 - élodie.mp3';
 import song4 from './assets/mp3/4 - élodie.mp3';
 import song5 from './assets/mp3/5 - élodie.mp3';
+import Gallery from './assets/gallery/Gallery';
 
 const App = () => {
   const originalButtonList = [
@@ -38,9 +39,9 @@ const App = () => {
   };
 
   const buttonList = originalButtonList.map((button) => (
-    <li key={button.id} className="m-2 text-gray-800 hover:text-gray-500 transition duration-300">
+    <li key={button.id} className="m-1 text-gray-900 hover:text-gray-700 transition duration-300">
       <button
-        className={`radioButton ${songIndex === button.id - 1 ? 'font-bold text-black' : ''} transition duration-300`}
+        className={`radioButton ${songIndex === button.id - 1 ? 'font-bold text-black' : ''} transition duration-100`}
         onClick={() => {
           setActiveButton(button.id); 
           setAudioSource(button.song);
@@ -116,10 +117,11 @@ const App = () => {
         <Navbar isMusicPlaying={isMusicPlaying} onPlayPause={toggleAudio} audioSource={audioSource} />
       </div>
       <Birds isPlaying={isMusicPlaying} />
+      {/* <Gallery /> */}
 
       <div className="flex flex-col items-center h-full space-y-3">
-        <div className="min-h-[310px] min-w-[310px] max-h-[300px] max-w-[300px] border-3 border-solid border-gray-800 p-4 mt-11 flex-shrink-0 shadow-md">
-          <div className="h-full w-full bg-cover" style={coverAttheEnd}></div>
+      <div className="min-h-[300px] min-w-[300px] max-h-[300px] max-w-[300px] border-3 border-solid border-gray-800 p-4 mt-4 sm:mt-11 flex-shrink-0 shadow-md">
+      <div className="h-full w-full bg-cover" style={coverAttheEnd}></div>
         </div>
 
         <ButtonFold />

@@ -9,11 +9,11 @@
     "build": "vite build",
     "serve": "vite preview",
     "start": "vite",
-   "docker:clean": "docker rm -vf $(docker ps -aq) && docker rmi -f $(docker images -aq)",
-  "docker:build": "docker buildx build --platform linux/amd64 -t elodie8 .",
-  "docker:push": "docker tag elodie8 gcr.io/elodie-fe/elodie8 && docker push gcr.io/elodie-fe/elodie8",
-  "docker:run": "docker run --name elodie8 -p 8080:8080 -d elodie8",
-  "docker:deploy": "gcloud run deploy elodie8 --image gcr.io/elodie-fe/elodie8 --platform managed --region europe-north1 --allow-unauthenticated"
+    "docker:clean": "docker rm -vf $(docker ps -aq) && docker rmi -f $(docker images -aq)",
+    "docker:build": "docker buildx build --platform linux/amd64 -t elodie8 .",
+    "docker:push": "docker tag elodie8 gcr.io/elodie-fe/elodie8 && docker push gcr.io/elodie-fe/elodie8",
+    "docker:run": "docker run --name elodie8 -p 8080:8080 -d elodie8",
+    "docker:deploy": "gcloud run deploy elodie8 --image gcr.io/elodie-fe/elodie8 --platform managed --region europe-north1 --allow-unauthenticated"
   },
   "devDependencies": {
     "@tanstack/router-plugin": "^1.81.9",
@@ -34,6 +34,7 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-icons": "^5.4.0",
+    "react-photo-album": "^3.0.2",
     "react-toastify": "^10.0.6"
   }
 }
