@@ -1,9 +1,7 @@
 
 
 export default function Birds({ isPlaying }) {
-
-    console.log("checking state in birds" + isPlaying);
-     
+ 
     return(
         <div>
         {/* Bird container 1 */}

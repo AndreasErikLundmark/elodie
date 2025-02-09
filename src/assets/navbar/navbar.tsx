@@ -23,7 +23,7 @@ export default function Navbar({ isMusicPlaying, onPlayPause, audioSource }: Nav
           {isMusicPlaying ? <IoIosPause /> : <IoIosPlay />}
         </button>
         <div className="absolute left-1/2 transform -translate-x-1/2">
-          <h1 className="text-black text-xl font-bold">élodie</h1>
+        <h1 className="text-black text-xl font-bold" style={{ letterSpacing: "0.1em" }}>élodie</h1>
         </div>
 
         {/* Navbar menu items (right aligned) */}
@@ -38,13 +38,13 @@ export default function Navbar({ isMusicPlaying, onPlayPause, audioSource }: Nav
             <summary className="cursor-pointer text-lg text-black list-none font-bold">
               <span className="ml-2">
                 {/* Custom arrow */}
-                {isFoldoutOpen ? '...' : '..'}
+                {isFoldoutOpen ? '..' : '...'}
               </span>
             </summary>
 
             {/* Foldout Menu Content */}
             <ul
-              className={`bg-white text-black p-2 shadow-none border-solid border-1 border-black z-50 transition-opacity duration-500 ease-in-out ${
+              className={`bg-[#f8f8f8] text-black p-2 shadow-none border-solid border-1 border-black z-50 transition-opacity duration-500 ease-in-out ${
                 isFoldoutOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
               }`}
               style={{
@@ -55,8 +55,8 @@ export default function Navbar({ isMusicPlaying, onPlayPause, audioSource }: Nav
                 maxWidth: '100vw', 
               }}
             >
-              <li><a href="#">About</a></li>
-              <li><a href="#">Gallery</a></li>
+<li><a href="https://sv.wikipedia.org/wiki/%C3%89lodie" target="_blank" rel="noopener noreferrer">About</a></li>
+<li><a href="#">Gallery</a></li>
             </ul>
           </details>
         </div>

@@ -1,4 +1,64 @@
 @import url('https://fonts.googleapis.com/css?family=Arima+Madurai:300');
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Karla:ital,wght@0,200..800;1,200..800&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+#fonts
+.dm-mono-light {
+    font-family: "DM Mono", serif;
+    font-weight: 300;
+    font-style: normal;
+  }
+  
+  .dm-mono-regular {
+    font-family: "DM Mono", serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  .dm-mono-medium {
+    font-family: "DM Mono", serif;
+    font-weight: 500;
+    font-style: normal;
+  }
+  
+  .dm-mono-light-italic {
+    font-family: "DM Mono", serif;
+    font-weight: 300;
+    font-style: italic;
+  }
+  
+  .dm-mono-regular-italic {
+    font-family: "DM Mono", serif;
+    font-weight: 400;
+    font-style: italic;
+  }
+  
+  .dm-mono-medium-italic {
+    font-family: "DM Mono", serif;
+    font-weight: 500;
+    font-style: italic;
+  }
+
+
+.montserrat-light-italic{
+    font-family: "Montserrat", serif;
+    font-weight: 300;
+    font-style: normal;
+  }
+
+  .karla-light-italic {
+    font-family: "Karla", serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    /* font-style: normal; */
+  }
+ 
+body {
+    font-family: "Karla", serif;
+    font-weight: 300;
+    /* font-style: normal; */
+}  
+
 
 #foldOut {
     /* position: absolute; */
@@ -24,6 +84,10 @@
     animation: fadeIn ease-in 1;
     animation-fill-mode: forwards;
     animation-duration: 1s;
+  }
+
+  .border-3 {
+    border-width: 3px;
   }
 
 
