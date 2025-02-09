@@ -16,7 +16,7 @@ export function ButtonFold() {
   const symbol = ">";
   const symbolOut = "v";
   return (
-    <button className="ButtonFold text-black text-2xl font-bold" onClick={fadeIn}>
+    <button className="ButtonFold text-red-500 text-2xl font-bold" onClick={fadeIn}>
       {buttonText}
     </button>
   );
