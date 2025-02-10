@@ -1,4 +1,4 @@
-# React + TypeScript + Vite + Tailwind
+# Audio showreel, React + TypeScript + Vite + Tailwind
 
 Runs on 8080
 
