@@ -1,16 +1,16 @@
-import { useState, useRef, useEffect } from 'react';
-import './App.css';
-import bg from '../src/assets/images/atendbg.png';
-import bgMain from '../src/assets/images/lake.png';
-import { ButtonFold } from './assets/buttons/buttonFold';
-import Navbar from './assets/navbar/navbar';
-import Birds from './assets/birds/birds';
-import song1 from './assets/mp3/1 - élodie.mp3';
-import song2 from './assets/mp3/2 - élodie.mp3';
-import song3 from './assets/mp3/3 - élodie.mp3';
-import song4 from './assets/mp3/4 - élodie.mp3';
-import song5 from './assets/mp3/5 - élodie.mp3';
-import Gallery from './assets/gallery/Gallery';
+import { useState, useRef, useEffect } from "react";
+import "./App.css";
+import bg from "../src/assets/images/atendbg.png";
+import bgMain from "../src/assets/images/lake.png";
+import { ButtonFold } from "./assets/buttons/buttonFold";
+import Navbar from "./assets/navbar/navbar";
+import Birds from "./assets/birds/birds";
+import song1 from "./assets/mp3/1 - élodie.mp3";
+import song2 from "./assets/mp3/2 - élodie.mp3";
+import song3 from "./assets/mp3/3 - élodie.mp3";
+import song4 from "./assets/mp3/4 - élodie.mp3";
+import song5 from "./assets/mp3/5 - élodie.mp3";
+import Gallery from "./assets/gallery/Gallery";
 
 const App = () => {
   const originalButtonList = [
@@ -26,7 +26,6 @@ const App = () => {
   const [audioSource, setAudioSource] = useState<string | null>(null);
   const [songIndex, setSongIndex] = useState<number>(-1);
 
-
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const divRef = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -34,18 +33,21 @@ const App = () => {
 
   const coverAttheEnd = {
     backgroundImage: `url(${bg})`,
-    backgroundPosition: 'center',
-    backgroundSize: 'cover',
+    backgroundPosition: "center",
+    backgroundSize: "cover",
   };
 
   const buttonList = originalButtonList.map((button) => (
-    <li key={button.id} className="m-1 text-gray-900 hover:text-gray-700 transition duration-300">
+    <li
+      key={button.id}
+      className="m-1 text-gray-900 hover:text-gray-700 transition duration-300"
+    >
       <button
-        className={`radioButton ${songIndex === button.id - 1 ? 'font-bold text-black' : ''} transition duration-100`}
+        className={`radioButton ${songIndex === button.id - 1 ? "font-bold text-black" : ""} transition duration-100`}
         onClick={() => {
-          setActiveButton(button.id); 
+          setActiveButton(button.id);
           setAudioSource(button.song);
-          setSongIndex(button.id - 1); 
+          setSongIndex(button.id - 1);
           setIsMusicPlaying(true);
         }}
       >
@@ -53,7 +55,6 @@ const App = () => {
       </button>
     </li>
   ));
-  
 
   const toggleAudio = () => {
     if (audioRef.current) {
@@ -76,7 +77,9 @@ const App = () => {
       setSongIndex(nextSongIndex);
       setAudioSource(nextSong);
     } else {
-      console.error("Next song is undefined! Something went wrong with the song list.");
+      console.error(
+        "Next song is undefined! Something went wrong with the song list."
+      );
     }
   };
 
@@ -90,11 +93,12 @@ const App = () => {
   return (
     <div
       ref={divRef}
-      className="w-full h-screen bg-[#f8f8f8] relative "   style={{
+      className="w-full h-screen bg-[#f8f8f8] relative "
+      style={{
         backgroundImage: `url(${bgMain})`,
-        backgroundSize: 'cover',  // Ensures the image covers the screen
-        backgroundRepeat: 'no-repeat',  // Prevents image repetition
-        backgroundPosition: 'center',  // Centers the image
+        backgroundSize: "cover", // Ensures the image covers the screen
+        backgroundRepeat: "no-repeat", // Prevents image repetition
+        backgroundPosition: "center", // Centers the image
       }}
       onMouseMove={(e) => {
         if (!divRef.current) return;
@@ -112,27 +116,29 @@ const App = () => {
           background: `radial-gradient(400px circle at ${position.x}px ${position.y}px, rgba(255,255,255,0.8), rgba(255,255,255,0) 50%)`,
         }}
       />
-      
+
       <div className="header flex justify-center items-center py-4">
-        <Navbar isMusicPlaying={isMusicPlaying} onPlayPause={toggleAudio} audioSource={audioSource} />
+        <Navbar
+          isMusicPlaying={isMusicPlaying}
+          onPlayPause={toggleAudio}
+          audioSource={audioSource}
+        />
       </div>
       <Birds isPlaying={isMusicPlaying} />
       {/* <Gallery /> */}
 
       <div className="flex flex-col items-center h-full space-y-3">
-      <div className="min-h-[300px] min-w-[300px] max-h-[300px] max-w-[300px] border-3 border-solid border-gray-800 p-4 mt-4 sm:mt-11 flex-shrink-0 shadow-md">
-      <div className="h-full w-full bg-cover" style={coverAttheEnd}></div>
+        <div className="min-h-[300px] min-w-[300px] max-h-[300px] max-w-[300px] border-3 border-solid border-gray-800 p-4 mt-4 sm:mt-11 flex-shrink-0 shadow-md">
+          <div className="h-full w-full bg-cover" style={coverAttheEnd}></div>
         </div>
 
         <ButtonFold />
 
         <div id="foldOut">
-          <ul className="radioButtons">
-            {buttonList}
-          </ul>
+          <ul className="radioButtons">{buttonList}</ul>
         </div>
       </div>
-      
+
       <footer className="h-0 bg-white">
         <div className="audio-player hidden fixed bottom-0 left-0 right-0 p-4 bg-white shadow-lg">
           <audio
@@ -153,4 +159,3 @@ const App = () => {
 };
 
 export default App;
-
