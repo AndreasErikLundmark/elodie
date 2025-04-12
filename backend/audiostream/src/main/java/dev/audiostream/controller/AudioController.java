@@ -15,6 +15,9 @@ public class AudioController {
     @GetMapping("/{fileName}")
     public ResponseEntity<Resource> playSong(@PathVariable String fileName,
     @RequestHeader(value = "Range", required = false) String rangeHeader) throws IOException {
+
+        Resource file = audioService.getFileByName(fileName);
+
         return null;
     }
 }
