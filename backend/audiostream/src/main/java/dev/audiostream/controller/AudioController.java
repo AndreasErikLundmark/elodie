@@ -2,9 +2,9 @@ package dev.audiostream.controller;
 
 
 import dev.audiostream.service.AudioService;
-import jakarta.annotation.Resource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +27,7 @@ public class AudioController {
     public ResponseEntity<InputStreamResource> playSong(@PathVariable String fileName,
                                                         @RequestHeader(value = "Range", required = false) String rangeHeader) throws IOException {
 
-        FileSystemResource audioFile = (FileSystemResource) audioService.getFileByName(fileName);
+        Resource audioFile = audioService.getFileByName(fileName);
         File file = audioFile.getFile();
 
         long fileLength = file.length();

@@ -1,6 +1,7 @@
 package dev.audiostream.service;
 
-import jakarta.annotation.Resource;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -9,7 +10,8 @@ import java.io.File;
 public class AudioService {
 
     public Resource getFileByName(String fileName) {
+        String filePath = "audioFiles/" + fileName;
+        return new ClassPathResource(filePath);
 
-        return null;
     }
 }
