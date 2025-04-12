@@ -1,14 +1,20 @@
 package dev.audiostream.controller;
 
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import jakarta.annotation.Resource;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/audio")
 public class AudioController {
 
-    
+    @GetMapping("/{fileName}")
+    public ResponseEntity<Resource> playSong(@PathVariable String fileName,
+    @RequestHeader(value = "Range", required = false) String rangeHeader) throws IOException {
+        return null;
+    }
 }
