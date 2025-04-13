@@ -15,7 +15,7 @@ import java.io.InputStream;
 
 @Service
 public class AudioService {
-    
+
     @Value("${gcp.bucket.name}")
     private String bucketName;
 
