@@ -27,7 +27,8 @@ public class AudioController {
     public ResponseEntity<InputStreamResource> playSong(@PathVariable String fileName,
                                                         @RequestHeader(value = "Range", required = false) String rangeHeader) throws IOException {
 
-        Resource audioFile = audioService.getFileByName(fileName);
+//        Resource audioFile = audioService.getFileByName(fileName);
+        Resource audioFile = audioService.getGcpFileByName(fileName);
         File file = audioFile.getFile();
 
         long fileLength = file.length();

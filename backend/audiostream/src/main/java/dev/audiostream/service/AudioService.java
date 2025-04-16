@@ -27,6 +27,7 @@ public class AudioService {
 
     /**
      * Talks to GCP storage API that provides a Blob
+     * ucket name is elodie-audiofiles-2025
      * @param fileName
      * @return
      */
