@@ -1,12 +1,19 @@
-FROM maven:3.8.7-openjdk-18-slim AS build
+FROM eclipse-temurin:23-jdk AS build
 
 WORKDIR /app
 
-COPY pom.xml /app/
+# MAVEN WRAPPER
+COPY .mvn/ .mvn
+COPY mvnw .
+COPY mvnw.cmd .
+COPY pom.xml .
+COPY src/ src/
 
-COPY src/ /app/src/
+# Ensure the wrapper is executable
+RUN chmod +x mvnw
 
-RUN mvn clean package -DskipTests
+# Use the Maven wrapper to build the project
+RUN ./mvnw clean package -DskipTests
 
 FROM openjdk:18-slim
 
