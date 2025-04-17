@@ -43,3 +43,9 @@ gcloud run deploy audiostreamer \
   --allow-unauthenticated
 ```
 
+---- GC Bucket ----
+See inside:
+```
+gsutil ls gs://elodie-audiofiles-2025/
+```
+
