@@ -24,47 +24,41 @@ public class AudioController {
     }
 
     @GetMapping("/{fileName}")
-    public ResponseEntity<InputStreamResource> playSong(@PathVariable String fileName,
-                                                        @RequestHeader(value = "Range", required = false) String rangeHeader) throws IOException {
+    public ResponseEntity<Resource> playSong(@PathVariable String fileName,
+                                             @RequestHeader(value = "Range", required = false) String rangeHeader) throws IOException {
 
-//        Resource audioFile = audioService.getFileByName(fileName);
         Resource audioFile = audioService.getGcpFileByName(fileName);
-        File file = audioFile.getFile();
-
-        long fileLength = file.length();
-        long rangeStart = 0;
-        long rangeEnd = fileLength - 1;
-
-        String fileType;
-        String endOfFile = fileName.toLowerCase().substring(fileName.length()-4);
-
-        if(endOfFile.equals(".mp3")) {
-            fileType = "audio/mpeg";
-        }
-        else if(endOfFile.equals(".wav")) {
-            fileType = "audio/wav";
-        }
-        else {
-            return ResponseEntity.badRequest().build();
-        }
-
-        if (rangeEnd >= fileLength) {
-            rangeEnd = fileLength - 1;
-        }
-
-        long contentLength = rangeEnd - rangeStart + 1;
-        InputStream inputStream = new BufferedInputStream(new FileInputStream(file));
-        inputStream.skip(rangeStart);
+        String fileType = determineFileType(fileName);
 
         HttpHeaders headers = new HttpHeaders();
         headers.set("Content-Type", fileType);
-        headers.set("Accept-Ranges", "bytes");
-        headers.set("Content-Length", String.valueOf(contentLength));
-        headers.set("Content-Range", String.format("bytes %d-%d/%d", rangeStart, rangeEnd, fileLength));
 
-        return ResponseEntity.status(rangeHeader != null ? HttpStatus.PARTIAL_CONTENT : HttpStatus.OK)
-                .headers(headers)
-                .body(new InputStreamResource(inputStream));
+        InputStream inputStream = audioFile.getInputStream();
 
+
+        InputStreamResource inputStreamResource = new InputStreamResource(inputStream);
+        if (inputStreamResource != null) {
+
+            return ResponseEntity.status(rangeHeader != null ? HttpStatus.PARTIAL_CONTENT : HttpStatus.OK)
+                    .headers(headers)
+                    .body(inputStreamResource);
+        }
+        return ResponseEntity.notFound().build();
     }
+
+    private String determineFileType(String fileName) {
+        String fileType;
+        String endOfFile = fileName.toLowerCase().substring(fileName.length() - 4);
+
+        if (endOfFile.equals(".mp3")) {
+            fileType = "audio/mpeg";
+        } else if (endOfFile.equals(".wav")) {
+            fileType = "audio/wav";
+        } else {
+            fileType = "application/octet-stream";  // Default fallback for unsupported types
+        }
+        return fileType;
+    }
+
+
 }

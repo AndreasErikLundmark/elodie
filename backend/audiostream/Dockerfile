@@ -15,7 +15,8 @@ RUN chmod +x mvnw
 # Use the Maven wrapper to build the project
 RUN ./mvnw clean package -DskipTests
 
-FROM openjdk:18-slim
+FROM eclipse-temurin:21-jre as runtime
+
 
 WORKDIR /app
 
