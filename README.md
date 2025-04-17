@@ -26,7 +26,8 @@ to deploy
 ----- Backend -----
 
 build and push: 
-```docker buildx build \
+```
+docker buildx build \
   --platform linux/amd64 \
   -t gcr.io/gcp-project-id/audiostreamer \
   --load .
