@@ -152,10 +152,25 @@ const App = () => {
       <Birds isPlaying={isMusicPlaying} />
       {/* <Gallery /> */}
         {/* cover */}
-      <div className=" flex flex-col items-center h-full space-y-3 -mt-4">
-        <div className="min-h-[290px] min-w-[290px] max-h-[290px] max-w-[290px] border-3 border-solid border-gray-800 p-4 mt-4 sm:mt-11 flex-shrink-0 shadow-md">
+        <div className="flex flex-col items-center h-full space-y-3 -mt-4">
+        {/* Loader when mutation is loading */}
+        {mutation.isPending ? (
+          <div className="flex justify-center items-center min-h-[290px] min-w-[290px] max-h-[290px] max-w-[290px] border-3 border-solid border-gray-800 p-4 mt-4 sm:mt-11 flex-shrink-0 shadow-md">
+            <div className="absolute loading loading-ring loading-lg z-10"></div> 
+            <div className="h-full w-full bg-cover " style={coverAttheEnd}></div>
+            
+             {/* Loader Spinner */}
+          </div>
+        ) : (
+          <div className="relative min-h-[290px] min-w-[290px] max-h-[290px] max-w-[290px] border-3 border-solid border-gray-800 p-4 mt-4 sm:mt-11 flex-shrink-0 shadow-md">
+            <div className="h-full w-full bg-cover" style={coverAttheEnd}></div> {/* Background */}
+          </div>
+        )}
+      
+      {/* <div className=" flex flex-col items-center h-full space-y-3 -mt-4">
+        <div className="loading loading-ring loading-lg min-h-[290px] min-w-[290px] max-h-[290px] max-w-[290px] border-3 border-solid border-gray-800 p-4 mt-4 sm:mt-11 flex-shrink-0 shadow-md">
           <div className="h-full w-full bg-cover" style={coverAttheEnd}></div>
-        </div>
+        </div> */}
 
         <ButtonFold />
 
