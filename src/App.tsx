@@ -5,20 +5,20 @@ import bgMain from "../src/assets/images/lake.png";
 import { ButtonFold } from "./assets/buttons/buttonFold";
 import Navbar from "./assets/navbar/navbar";
 import Birds from "./assets/birds/birds";
-import song1 from "./assets/mp3/1 - élodie.mp3";
-import song2 from "./assets/mp3/2 - élodie.mp3";
-import song3 from "./assets/mp3/3 - élodie.mp3";
-import song4 from "./assets/mp3/4 - élodie.mp3";
-import song5 from "./assets/mp3/5 - élodie.mp3";
+// import song1 from "./assets/mp3/1 - élodie.mp3";
+// import song2 from "./assets/mp3/2 - élodie.mp3";
+// import song3 from "./assets/mp3/3 - élodie.mp3";
+// import song4 from "./assets/mp3/4 - élodie.mp3";
+// import song5 from "./assets/mp3/5 - élodie.mp3";
 import Gallery from "./assets/gallery/Gallery";
-
+const GET_URL = "https://audiostreamer-697604347968.us-central1.run.app/audio/";
 const App = () => {
   const originalButtonList = [
-    { id: 1, title: "1. Be My Ghost", song: song1 },
-    { id: 2, title: "2. At the End of the Line", song: song2 },
-    { id: 3, title: "3. Mandarine #2", song: song3 },
-    { id: 4, title: "4. Make-up killers", song: song4 },
-    { id: 5, title: "5. Overload", song: song5 },
+    { id: 1, title: "1. Be My Ghost", song: GET_URL+"01%20Be%20My%20Ghost.mp3" },
+    { id: 2, title: "2. At the End of the Line", song: GET_URL+"02%20At%20The%20End%20Of%20The%20Line.mp3" },
+    { id: 3, title: "3. Mandarine #2", song: GET_URL+"03%20Mandarine%20#2.mp3" },
+    { id: 4, title: "4. Make-up killers", song: GET_URL+"04%20Make-up%20Killers.mp3" },
+    { id: 5, title: "5. Overload", song: GET_URL+"05%20Overload.mp3" },
   ];
 
   const [activeButton, setActiveButton] = useState<number | null>(null);
