@@ -79,7 +79,8 @@ const App = () => {
 
     if (nextSong) {
       setSongIndex(nextSongIndex);
-      setAudioSource(nextSong);
+      // setAudioSource(nextSong);
+      mutation.mutate({ song_name: nextSong });
     } else {
       console.error(
         "Next song is undefined! Something went wrong with the song list."
@@ -110,9 +111,6 @@ const App = () => {
       console.error("Error fetching song:", error);
     },
   });
-
-
-
 
 
   return (
@@ -152,7 +150,7 @@ const App = () => {
       <Birds isPlaying={isMusicPlaying} />
       {/* <Gallery /> */}
         {/* cover */}
-        <div className="flex flex-col items-center h-full space-y-3 -mt-4">
+        <div className="flex flex-col items-center h-full space-y-3 -mt-6">
         {/* Loader when mutation is loading */}
         {mutation.isPending ? (
           <div className="flex justify-center items-center min-h-[290px] min-w-[290px] max-h-[290px] max-w-[290px] border-3 border-solid border-gray-800 p-4 mt-4 sm:mt-11 flex-shrink-0 shadow-md">
