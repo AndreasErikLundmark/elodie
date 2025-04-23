@@ -10,15 +10,18 @@ import Birds from "./assets/birds/birds";
 // import song3 from "./assets/mp3/3 - élodie.mp3";
 // import song4 from "./assets/mp3/4 - élodie.mp3";
 // import song5 from "./assets/mp3/5 - élodie.mp3";
-import Gallery from "./assets/gallery/Gallery";
-const GET_URL = "https://audiostreamer-697604347968.us-central1.run.app/audio/";
+// import Gallery from "./assets/gallery/Gallery";
+import { useMutation } from "@tanstack/react-query";
+import { fetchSong } from "./assets/api/api";
+
+// const GET_URL = "https://audiostreamer-697604347968.us-central1.run.app/audio/";
 const App = () => {
   const originalButtonList = [
-    { id: 1, title: "1. Be My Ghost", song: GET_URL+"01%20Be%20My%20Ghost.mp3" },
-    { id: 2, title: "2. At the End of the Line", song: GET_URL+"02%20At%20The%20End%20Of%20The%20Line.mp3" },
-    { id: 3, title: "3. Mandarine #2", song: GET_URL+"03%20Mandarine%20#2.mp3" },
-    { id: 4, title: "4. Make-up killers", song: GET_URL+"04%20Make-up%20Killers.mp3" },
-    { id: 5, title: "5. Overload", song: GET_URL+"05%20Overload.mp3" },
+    { id: 1, title: "1. Be My Ghost", song: "01%20Be%20My%20Ghost.mp3" },
+    { id: 2, title: "2. At the End of the Line", song: "02%20At%20The%20End%20Of%20The%20Line.mp3" },
+    { id: 3, title: "3. Mandarine #2", song: "03%20Mandarine%20%232.mp3" },
+    { id: 4, title: "4. Make-up killers", song: "04%20Make-up%20Killers.mp3" },
+    { id: 5, title: "5. Overload", song: "05%20Overload.mp3" },
   ];
 
   const [activeButton, setActiveButton] = useState<number | null>(null);
@@ -46,9 +49,10 @@ const App = () => {
         className={`radioButton ${songIndex === button.id - 1 ? "font-bold text-black" : ""} transition duration-100`}
         onClick={() => {
           setActiveButton(button.id);
-          setAudioSource(button.song);
+          // setAudioSource(button.song);
           setSongIndex(button.id - 1);
           setIsMusicPlaying(true);
+          mutation.mutate({ song_name: button.song });
         }}
       >
         {button.title}
@@ -89,6 +93,27 @@ const App = () => {
       audioRef.current.play();
     }
   }, [audioSource]);
+
+  const mutation = useMutation({
+    mutationFn: async ({
+      song_name
+    }: {
+      song_name: string;
+    }) => {
+        return await fetchSong(song_name);
+    },
+    onSuccess: (responseData) => {
+  
+      setAudioSource(responseData);
+    },
+    onError: (error) => {
+      console.error("Error fetching song:", error);
+    },
+  });
+
+
+
+
 
   return (
     <div
