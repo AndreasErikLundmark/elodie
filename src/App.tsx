@@ -96,9 +96,9 @@ const App = () => {
       className="w-full h-screen bg-[#f8f8f8] relative "
       style={{
         backgroundImage: `url(${bgMain})`,
-        backgroundSize: "cover", // Ensures the image covers the screen
-        backgroundRepeat: "no-repeat", // Prevents image repetition
-        backgroundPosition: "center", // Centers the image
+        backgroundSize: "cover", 
+        backgroundRepeat: "no-repeat", 
+        backgroundPosition: "center", 
       }}
       onMouseMove={(e) => {
         if (!divRef.current) return;
@@ -126,9 +126,9 @@ const App = () => {
       </div>
       <Birds isPlaying={isMusicPlaying} />
       {/* <Gallery /> */}
-
-      <div className="flex flex-col items-center h-full space-y-3">
-        <div className="min-h-[300px] min-w-[300px] max-h-[300px] max-w-[300px] border-3 border-solid border-gray-800 p-4 mt-4 sm:mt-11 flex-shrink-0 shadow-md">
+        {/* cover */}
+      <div className=" flex flex-col items-center h-full space-y-3 -mt-4">
+        <div className="min-h-[290px] min-w-[290px] max-h-[290px] max-w-[290px] border-3 border-solid border-gray-800 p-4 mt-4 sm:mt-11 flex-shrink-0 shadow-md">
           <div className="h-full w-full bg-cover" style={coverAttheEnd}></div>
         </div>
 
