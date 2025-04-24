@@ -1,13 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 // import { IoIosPause, IoIosPlay } from "react-icons/io";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaCirclePlay } from "react-icons/fa6";
 import { FaPauseCircle } from "react-icons/fa";
 import { PiVinylRecord } from "react-icons/pi";
 import { RxDividerVertical } from "react-icons/rx";
-
-
-
 
 interface NavbarProps {
   isMusicPlaying: boolean;
@@ -22,6 +19,24 @@ export default function Navbar({
 }: NavbarProps) {
   const [isFoldoutOpen, setFoldoutOpen] = useState(false);
 
+  const urlArray = ["/", "/ItsTobadYoureLeaving"];
+
+  const [currentIndex, setCurrentIndex] = useState(1);
+
+  const navigate = useNavigate();
+
+  const toggleUrl = () => {
+    if (currentIndex === 0) {
+      setCurrentIndex(1);
+    }
+    if (currentIndex === 1) {
+      setCurrentIndex(0);
+    }
+
+    // setCurrentIndex((prevIndex) => (prevIndex === 0 ? 1 : 0));
+    console.log(currentIndex);
+  };
+
   return (
     <div className="w-full bg-transparent text-black text-lg">
       {/* Navbar div */}
@@ -34,13 +49,16 @@ export default function Navbar({
         >
           {/* {isMusicPlaying ? <IoIosPause /> : <IoIosPlay />} */}
           {isMusicPlaying ? <FaPauseCircle /> : <FaCirclePlay />}
-      
         </button>
-        <p className="text-2xl"><RxDividerVertical />
+        <p className="text-2xl">
+          <RxDividerVertical />
         </p>
-        <button className="text-2xl"><Link to="/ItsTobadYoureLeaving"><PiVinylRecord />
-        </Link> </button>
-        
+        <button className="text-2xl" onClick={toggleUrl}>
+          <Link to={urlArray[currentIndex]}>
+            <PiVinylRecord />
+          </Link>
+        </button>
+
         <div className="absolute left-1/2 transform -translate-x-1/2">
           <h1
             className="text-black text-2xl font-bold"
@@ -88,7 +106,7 @@ export default function Navbar({
                 </a>
               </li>
               <li>
-              <Link to="/photos">Gallery</Link>
+                <Link to="/photos">Gallery</Link>
                 {/* <a href="#">Gallery</a> */}
               </li>
             </ul>
