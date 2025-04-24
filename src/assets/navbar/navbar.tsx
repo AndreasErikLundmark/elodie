@@ -1,6 +1,13 @@
 import { useState } from "react";
 import { IoIosPause, IoIosPlay } from "react-icons/io";
 import { Link } from "react-router-dom";
+import { FaCirclePlay } from "react-icons/fa6";
+import { FaPauseCircle } from "react-icons/fa";
+import { PiVinylRecord } from "react-icons/pi";
+import { RxDividerVertical } from "react-icons/rx";
+
+
+
 
 interface NavbarProps {
   isMusicPlaying: boolean;
@@ -22,12 +29,18 @@ export default function Navbar({
         {/* Play/Pause Button */}
         <button
           onClick={onPlayPause}
-          className={`text-2xl ${audioSource === null ? "text-gray-400 cursor-not-allowed" : ""}`}
+          className={`text-xl ${audioSource === null ? "text-gray-800 cursor-not-allowed" : ""}`}
           disabled={audioSource === null}
         >
-          {isMusicPlaying ? <IoIosPause /> : <IoIosPlay />}
+          {/* {isMusicPlaying ? <IoIosPause /> : <IoIosPlay />} */}
+          {isMusicPlaying ? <FaPauseCircle /> : <FaCirclePlay />}
+      
         </button>
-        <button><Link to="/ItsTobadYoureLeaving">Its too bad</Link> | </button>
+        <p className="text-2xl"><RxDividerVertical />
+        </p>
+        <button className="text-2xl"><Link to="/ItsTobadYoureLeaving"><PiVinylRecord />
+        </Link> </button>
+        
         <div className="absolute left-1/2 transform -translate-x-1/2">
           <h1
             className="text-black text-2xl font-bold"
