@@ -7,6 +7,8 @@ import Navbar from "./assets/navbar/navbar";
 import Birds from "./assets/birds/birds";
 import { useMutation } from "@tanstack/react-query";
 import { fetchSong } from "./assets/api/api";
+import ScrollDownButton from "./assets/buttons/scrollDownButton";
+
 
 
 export default function ItsTooBad(){
@@ -112,6 +114,19 @@ export default function ItsTooBad(){
           console.error("Error fetching song:", error);
         },
       });
+
+    //   const scrollFoldOut = (direction) => {
+    //     const container = document.getElementById("foldOut");
+    //     if (!container) return;
+      
+    //     const scrollAmount = 60; // Adjust this for more/less scroll per click
+      
+    //     if (direction === "down") {
+    //       container.scrollBy({ top: scrollAmount, behavior: "smooth" });
+    //     } else {
+    //       container.scrollBy({ top: -scrollAmount, behavior: "smooth" });
+    //     }
+    //   };
     
     
       return (
@@ -170,10 +185,16 @@ export default function ItsTooBad(){
     <div className="mt-2">
             <ButtonFold />
             </div>
-            <div id="foldOut" className="flex flex-col max-h-[150px] overflow-y-auto px-6 w-full p-2 mt-10">
-                
+            
+            <div id="foldOut" className="flex flex-row items-start gap-2 max-h-[120px] overflow-y-auto px-6 min-w-[290px] p-2 mt-10">
+               
+  <div>
+
   <ul className="radioButtons">{buttonList}</ul>
+  </div>
+<ScrollDownButton/>    
 </div>
+ 
 
 
           </div>

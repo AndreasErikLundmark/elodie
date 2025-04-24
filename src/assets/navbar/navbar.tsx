@@ -58,7 +58,7 @@ export default function Navbar({
             onToggle={() => setFoldoutOpen((prevState) => !prevState)}
             className="relative"
           >
-            <summary className="cursor-pointer text-lg text-black list-none font-bold">
+            <summary className="cursor-pointer text-2xl text-black list-none font-bold">
               <span className="ml-2">
                 {/* Custom arrow */}
                 {isFoldoutOpen ? ".." : "..."}
@@ -88,7 +88,8 @@ export default function Navbar({
                 </a>
               </li>
               <li>
-                <a href="#">Gallery</a>
+              <Link to="/photos">Gallery</Link>
+                {/* <a href="#">Gallery</a> */}
               </li>
             </ul>
           </details>

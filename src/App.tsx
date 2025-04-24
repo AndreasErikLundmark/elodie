@@ -5,12 +5,6 @@ import bgMain from "../src/assets/images/lake.png";
 import { ButtonFold } from "./assets/buttons/buttonFold";
 import Navbar from "./assets/navbar/navbar";
 import Birds from "./assets/birds/birds";
-// import song1 from "./assets/mp3/1 - élodie.mp3";
-// import song2 from "./assets/mp3/2 - élodie.mp3";
-// import song3 from "./assets/mp3/3 - élodie.mp3";
-// import song4 from "./assets/mp3/4 - élodie.mp3";
-// import song5 from "./assets/mp3/5 - élodie.mp3";
-// import Gallery from "./assets/gallery/Gallery";
 import { useMutation } from "@tanstack/react-query";
 import { fetchSong } from "./assets/api/api";
 
