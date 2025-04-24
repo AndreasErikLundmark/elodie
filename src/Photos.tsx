@@ -78,7 +78,7 @@ export default function Photos() {
       </div>
 
       {/* Content section that is scrollable */}
-      <div className="flex flex-col items-center overflow-y-auto max-h-[500px]">
+      <div className="flex flex-col items-center overflow-y-auto max-h-[500px] ">
         <Gallery />
       </div>
 
