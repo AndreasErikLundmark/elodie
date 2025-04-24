@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import "./App.css";
-import bg from "../src/assets/images/its too bad youre leaving.png";
-import bgMain from "../src/assets/images/lakeblue.png";
+// import bg from "../src/assets/images/its too bad youre leaving.png";
+import bgMain from "../src/assets/images/lakedark.png";
 import Navbar from "./assets/navbar/navbar";
 import Gallery from "./assets/gallery/Gallery";
 
@@ -14,11 +14,11 @@ export default function Photos() {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [opacity, setOpacity] = useState(0);
 
-  const coverAttheEnd = {
-    backgroundImage: `url(${bg})`,
-    backgroundPosition: "center",
-    backgroundSize: "cover",
-  };
+  //   const coverAttheEnd = {
+  //     backgroundImage: `url(${bg})`,
+  //     backgroundPosition: "center",
+  //     backgroundSize: "cover",
+  //   };
 
   const toggleAudio = () => {
     if (audioRef.current) {

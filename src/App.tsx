@@ -12,7 +12,11 @@ import { fetchSong } from "./assets/api/api";
 const App = () => {
   const originalButtonList = [
     { id: 1, title: "1. Be My Ghost", song: "01%20Be%20My%20Ghost.mp3" },
-    { id: 2, title: "2. At the End of the Line", song: "02%20At%20The%20End%20Of%20The%20Line.mp3" },
+    {
+      id: 2,
+      title: "2. At the End of the Line",
+      song: "02%20At%20The%20End%20Of%20The%20Line.mp3",
+    },
     { id: 3, title: "3. Mandarine #2", song: "03%20Mandarine%20%232.mp3" },
     { id: 4, title: "4. Make-up killers", song: "04%20Make-up%20Killers.mp3" },
     { id: 5, title: "5. Overload", song: "05%20Overload.mp3" },
@@ -90,15 +94,10 @@ const App = () => {
   }, [audioSource]);
 
   const mutation = useMutation({
-    mutationFn: async ({
-      song_name
-    }: {
-      song_name: string;
-    }) => {
-        return await fetchSong(song_name);
+    mutationFn: async ({ song_name }: { song_name: string }) => {
+      return await fetchSong(song_name);
     },
     onSuccess: (responseData) => {
-  
       setAudioSource(responseData);
     },
     onError: (error) => {
@@ -106,16 +105,15 @@ const App = () => {
     },
   });
 
-
   return (
     <div
       ref={divRef}
       className="w-full h-screen bg-[#f8f8f8] relative "
       style={{
         backgroundImage: `url(${bgMain})`,
-        backgroundSize: "cover", 
-        backgroundRepeat: "no-repeat", 
-        backgroundPosition: "center", 
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
       }}
       onMouseMove={(e) => {
         if (!divRef.current) return;
@@ -143,23 +141,27 @@ const App = () => {
       </div>
       <Birds isPlaying={isMusicPlaying} />
       {/* <Gallery /> */}
-        {/* cover */}
-        <div className="flex flex-col items-center h-full space-y-3 -mt-6">
+      {/* cover */}
+      <div className="flex flex-col items-center h-full space-y-3 -mt-6">
         {/* Loader when mutation is loading */}
         {mutation.isPending ? (
           <div className="flex justify-center items-center min-h-[290px] min-w-[290px] max-h-[290px] max-w-[290px] border-3 border-solid border-gray-800 p-4 mt-4 sm:mt-11 flex-shrink-0 shadow-md">
-            <div className="absolute loading loading-ring loading-lg z-10"></div> 
-            <div className="h-full w-full bg-cover " style={coverAttheEnd}></div>
-            
-             {/* Loader Spinner */}
+            <div className="absolute loading loading-ring loading-lg z-10"></div>
+            <div
+              className="h-full w-full bg-cover "
+              style={coverAttheEnd}
+            ></div>
+
+            {/* Loader Spinner */}
           </div>
         ) : (
           <div className="relative min-h-[290px] min-w-[290px] max-h-[290px] max-w-[290px] border-2 border-solid border-gray-800 p-4 mt-4 sm:mt-11 flex-shrink-0 shadow-md">
-            <div className="h-full w-full bg-cover" style={coverAttheEnd}></div> {/* Background */}
+            <div className="h-full w-full bg-cover" style={coverAttheEnd}></div>{" "}
+            {/* Background */}
           </div>
         )}
-      
-      {/* <div className=" flex flex-col items-center h-full space-y-3 -mt-4">
+
+        {/* <div className=" flex flex-col items-center h-full space-y-3 -mt-4">
         <div className="loading loading-ring loading-lg min-h-[290px] min-w-[290px] max-h-[290px] max-w-[290px] border-3 border-solid border-gray-800 p-4 mt-4 sm:mt-11 flex-shrink-0 shadow-md">
           <div className="h-full w-full bg-cover" style={coverAttheEnd}></div>
         </div> */}

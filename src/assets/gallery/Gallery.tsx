@@ -5,7 +5,7 @@ import p3 from "../images/elodieguitar.jpg";
 
 export default function Gallery() {
   return (
-    <div className="flex flex-col gap-4 p-4 bg-slate-900 shadow-md border border-opacity-90">
+    <div className="flex flex-col gap-4 p-4 bg-slate-900 bg-opacity-50 shadow-md ">
       <div className="p-2 shadow-md bg-[#fef8f2] rounded size-80 overflow-hidden">
         <img
           src={p1}

@@ -46,7 +46,7 @@ export default function Navbar({
             className="text-black text-2xl font-bold"
             style={{ letterSpacing: "0.1em" }}
           >
-            élodie
+            <Link to="/">élodie</Link>
           </h1>
         </div>
 
@@ -59,7 +59,7 @@ export default function Navbar({
             className="relative"
           >
             <summary className="cursor-pointer text-2xl text-black list-none font-bold">
-              <span className="ml-2">
+              <span className="ml-2 ">
                 {/* Custom arrow */}
                 {isFoldoutOpen ? ".." : "..."}
               </span>
@@ -67,7 +67,7 @@ export default function Navbar({
 
             {/* Foldout Menu */}
             <ul
-              className={`bg-gray-950 opacity-95 rounded-md z-1 text-gray-300 p-4 shadow-none border-solid border-1 border-black z-50 transition-opacity duration-500 ease-in-out ${
+              className={`bg-gray-950 bg-opacity-50 text-m rounded-md z-1 text-gray-300 p-4 shadow-none border-solid border-1 border-black z-50 transition-opacity duration-500 ease-in-out ${
                 isFoldoutOpen ? "opacity-100" : "opacity-0 pointer-events-none"
               }`}
               style={{
