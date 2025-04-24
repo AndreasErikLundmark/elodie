@@ -160,7 +160,7 @@ const App = () => {
              {/* Loader Spinner */}
           </div>
         ) : (
-          <div className="relative min-h-[290px] min-w-[290px] max-h-[290px] max-w-[290px] border-3 border-solid border-gray-800 p-4 mt-4 sm:mt-11 flex-shrink-0 shadow-md">
+          <div className="relative min-h-[290px] min-w-[290px] max-h-[290px] max-w-[290px] border-2 border-solid border-gray-800 p-4 mt-4 sm:mt-11 flex-shrink-0 shadow-md">
             <div className="h-full w-full bg-cover" style={coverAttheEnd}></div> {/* Background */}
           </div>
         )}
