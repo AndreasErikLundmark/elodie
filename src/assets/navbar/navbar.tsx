@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { IoIosPause, IoIosPlay } from "react-icons/io";
+import { Link } from "react-router-dom";
 
 interface NavbarProps {
   isMusicPlaying: boolean;
@@ -26,6 +27,7 @@ export default function Navbar({
         >
           {isMusicPlaying ? <IoIosPause /> : <IoIosPlay />}
         </button>
+        <button><Link to="/ItsTobadYoureLeaving">Its too bad</Link> | </button>
         <div className="absolute left-1/2 transform -translate-x-1/2">
           <h1
             className="text-black text-2xl font-bold"
