@@ -12,11 +12,17 @@ import { fetchSong } from "./assets/api/api";
 export default function ItsTooBad(){
 
     const originalButtonList = [
-        { id: 1, title: "1. Be My Ghost", song: "01%20Be%20My%20Ghost.mp3" },
-        { id: 2, title: "2. At the End of the Line", song: "02%20At%20The%20End%20Of%20The%20Line.mp3" },
-        { id: 3, title: "3. Mandarine #2", song: "03%20Mandarine%20%232.mp3" },
-        { id: 4, title: "4. Make-up killers", song: "04%20Make-up%20Killers.mp3" },
-        { id: 5, title: "5. Overload", song: "05%20Overload.mp3" },
+        { id: 1, title: "1. Jannowitzbrücke", song: "01%20Be%20My%20Ghost.mp3" },
+        { id: 2, title: "2. 16:41", song: "02%20At%20The%20End%20Of%20The%20Line.mp3" },
+        { id: 3, title: "3. Yellow Trail", song: "03%20Mandarine%20%232.mp3" },
+        { id: 4, title: "4. Esmeralda", song: "04%20Make-up%20Killers.mp3" },
+        { id: 5, title: "5. See you", song: "05%20Overload.mp3" },
+        { id: 6, title: "6. Five Minutes", song: "01%20Be%20My%20Ghost.mp3" },
+        { id: 7, title: "7. Maps & Squares", song: "02%20At%20The%20End%20Of%20The%20Line.mp3" },
+        { id: 8, title: "8. Mosquito", song: "03%20Mandarine%20%232.mp3" },
+        { id: 9, title: "9. Åka bil", song: "04%20Make-up%20Killers.mp3" },
+        { id: 10, title: "10. Åka bil, pt2", song: "05%20Overload.mp3" },
+        { id: 11, title: "11. Le Soleil Brille", song: "05%20Overload.mp3" },
       ];
     
       const [activeButton, setActiveButton] = useState<number | null>(null);
