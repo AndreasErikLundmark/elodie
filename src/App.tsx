@@ -7,6 +7,7 @@ import Navbar from "./assets/navbar/navbar";
 import Birds from "./assets/birds/birds";
 import { useMutation } from "@tanstack/react-query";
 import { fetchSong } from "./assets/api/api";
+import FooterNav from "./assets/footer/FooterNav";
 
 // const GET_URL = "https://audiostreamer-697604347968.us-central1.run.app/audio/";
 const App = () => {
@@ -173,7 +174,7 @@ const App = () => {
         </div>
       </div>
 
-      <footer className="h-0 bg-white">
+      <footer className="bg-white w-full hidden">
         <div className="audio-player hidden fixed bottom-0 left-0 right-0 p-4 bg-white shadow-lg">
           <audio
             ref={audioRef}

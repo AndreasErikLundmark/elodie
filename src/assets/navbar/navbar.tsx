@@ -5,6 +5,9 @@ import { FaCirclePlay } from "react-icons/fa6";
 import { FaPauseCircle } from "react-icons/fa";
 import { PiVinylRecord } from "react-icons/pi";
 import { RxDividerVertical } from "react-icons/rx";
+import { HiOutlinePhotograph } from "react-icons/hi";
+import { LuInfo } from "react-icons/lu";
+import { NavLink } from "react-router-dom";
 
 interface NavbarProps {
   isMusicPlaying: boolean;
@@ -21,21 +24,7 @@ export default function Navbar({
 
   const urlArray = ["/", "/ItsTobadYoureLeaving"];
 
-  const [currentIndex, setCurrentIndex] = useState(1);
-
-  const navigate = useNavigate();
-
-  const toggleUrl = () => {
-    if (currentIndex === 0) {
-      setCurrentIndex(1);
-    }
-    if (currentIndex === 1) {
-      setCurrentIndex(0);
-    }
-
-    // setCurrentIndex((prevIndex) => (prevIndex === 0 ? 1 : 0));
-    console.log(currentIndex);
-  };
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   return (
     <div className="w-full bg-transparent text-black text-lg">
@@ -49,14 +38,6 @@ export default function Navbar({
         >
           {/* {isMusicPlaying ? <IoIosPause /> : <IoIosPlay />} */}
           {isMusicPlaying ? <FaPauseCircle /> : <FaCirclePlay />}
-        </button>
-        <p className="text-2xl">
-          <RxDividerVertical />
-        </p>
-        <button className="text-2xl" onClick={toggleUrl}>
-          <Link to={urlArray[currentIndex]}>
-            <PiVinylRecord />
-          </Link>
         </button>
 
         <div className="absolute left-1/2 transform -translate-x-1/2">
@@ -85,7 +66,7 @@ export default function Navbar({
 
             {/* Foldout Menu */}
             <ul
-              className={`bg-gray-950 bg-opacity-50 text-m rounded-md z-1 text-gray-300 p-4 shadow-none border-solid border-1 border-black z-50 transition-opacity duration-500 ease-in-out ${
+              className={`bg-gray-950 bg-opacity-90 text-2xl gap-4 rounded-md z-1 text-gray-300 p-4 shadow-none border-solid border-1 border-black z-50 transition-opacity duration-500 ease-in-out ${
                 isFoldoutOpen ? "opacity-100" : "opacity-0 pointer-events-none"
               }`}
               style={{
@@ -96,18 +77,40 @@ export default function Navbar({
                 maxWidth: "100vw",
               }}
             >
-              <li>
+              <li className="m-2">
                 <a
                   href="https://sv.wikipedia.org/wiki/%C3%89lodie"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  About
+                  <LuInfo />
                 </a>
               </li>
-              <li>
-                <Link to="/photos">Gallery</Link>
+              <li className="m-2">
+                <Link to="/photos">
+                  <HiOutlinePhotograph />
+                </Link>
                 {/* <a href="#">Gallery</a> */}
+              </li>
+              <li className="m-2">
+                <NavLink
+                  to="/"
+                  className={({ isActive }) =>
+                    isActive ? "text-black font-bold" : "text-gray-300"
+                  }
+                >
+                  <PiVinylRecord />
+                </NavLink>
+              </li>
+              <li className="m-2">
+                <NavLink
+                  to="/ItsTobadYoureLeaving"
+                  className={({ isActive }) =>
+                    isActive ? "text-black font-bold" : "text-gray-300"
+                  }
+                >
+                  <PiVinylRecord />
+                </NavLink>
               </li>
             </ul>
           </details>
