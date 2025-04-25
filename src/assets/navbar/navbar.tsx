@@ -55,7 +55,7 @@ export default function Navbar({
             className="relative"
           >
             <summary className="cursor-pointer text-2xl text-black list-none font-bold">
-              <span className="ml-2 ">
+              <span className="ml-2 pulsing-text">
                 {/* Custom arrow */}
 
                 {isFoldoutOpen ? ".." : "..."}
@@ -94,6 +94,16 @@ export default function Navbar({
               <li className="m-2">
                 <NavLink
                   to="/ItsTobadYoureLeaving"
+                  className={({ isActive }) =>
+                    isActive ? "text-black font-bold" : "text-gray-300"
+                  }
+                >
+                  <PiVinylRecord />
+                </NavLink>
+              </li>
+              <li className="m-2">
+                <NavLink
+                  to="/OtherTunes"
                   className={({ isActive }) =>
                     isActive ? "text-black font-bold" : "text-gray-300"
                   }

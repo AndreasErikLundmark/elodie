@@ -7,7 +7,6 @@ import Navbar from "./assets/navbar/navbar";
 import Birds from "./assets/birds/birds";
 import { useMutation } from "@tanstack/react-query";
 import { fetchSong } from "./assets/api/api";
-import FooterNav from "./assets/footer/FooterNav";
 
 // const GET_URL = "https://audiostreamer-697604347968.us-central1.run.app/audio/";
 const App = () => {
@@ -141,8 +140,7 @@ const App = () => {
         />
       </div>
       <Birds isPlaying={isMusicPlaying} />
-      {/* <Gallery /> */}
-      {/* cover */}
+
       <div className="flex flex-col items-center h-full space-y-3 -mt-6">
         {/* Loader when mutation is loading */}
         {mutation.isPending ? (
@@ -161,11 +159,6 @@ const App = () => {
             {/* Background */}
           </div>
         )}
-
-        {/* <div className=" flex flex-col items-center h-full space-y-3 -mt-4">
-        <div className="loading loading-ring loading-lg min-h-[290px] min-w-[290px] max-h-[290px] max-w-[290px] border-3 border-solid border-gray-800 p-4 mt-4 sm:mt-11 flex-shrink-0 shadow-md">
-          <div className="h-full w-full bg-cover" style={coverAttheEnd}></div>
-        </div> */}
 
         <ButtonFold />
 

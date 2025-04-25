@@ -1,10 +1,9 @@
 import { useState, useRef, useEffect } from "react";
 import "./App.css";
-import bg from "../src/assets/images/atendbg.png";
-import bgMain from "../src/assets/images/lake.png";
+// import bg from "../src/assets/images/atendbg.png";
+import bgMain from "../src/assets/images/lakedarkblue.png";
 import { ButtonFold } from "./assets/buttons/buttonFold";
 import Navbar from "./assets/navbar/navbar";
-import Birds from "./assets/birds/birds";
 import { useMutation } from "@tanstack/react-query";
 import { fetchSong } from "./assets/api/api";
 
@@ -34,6 +33,14 @@ const OtherTunes = () => {
     },
   ];
 
+  const rumbleList = [
+    { id: 10, title: "1. Marshmallow Man", song: "01%20Marshmallow%20man.mp3" },
+    { id: 11, title: "2. Jannowitzbrücke", song: "02%20Jannowitzbrücke.mp3" },
+    { id: 12, title: "3. Cosmonaut", song: "03%20Cosmonaut.mp3" },
+  ];
+
+  const lastList = [{ id: 13, title: "1. Epilogue", song: "epilouge.wav" }];
+
   const [activeButton, setActiveButton] = useState<number | null>(null);
   const [isMusicPlaying, setIsMusicPlaying] = useState(false);
   const [audioSource, setAudioSource] = useState<string | null>(null);
@@ -44,16 +51,50 @@ const OtherTunes = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [opacity, setOpacity] = useState(0);
 
-  const coverAttheEnd = {
-    backgroundImage: `url(${bg})`,
-    backgroundPosition: "center",
-    backgroundSize: "cover",
-  };
-
   const buttonList = originalButtonList.map((button) => (
     <li
       key={button.id}
-      className="m-1 text-gray-900 hover:text-gray-700 transition duration-300"
+      className="m-1 text-gray-900 hover:text-gray-200 transition duration-300"
+    >
+      <button
+        className={`radioButton ${songIndex === button.id - 1 ? "font-bold text-black" : ""} transition duration-100`}
+        onClick={() => {
+          setActiveButton(button.id);
+          // setAudioSource(button.song);
+          setSongIndex(button.id - 1);
+          setIsMusicPlaying(true);
+          mutation.mutate({ song_name: button.song });
+        }}
+      >
+        {button.title}
+      </button>
+    </li>
+  ));
+
+  const buttonList2 = rumbleList.map((button) => (
+    <li
+      key={button.id}
+      className="m-1 text-gray-900 hover:text-gray-200 transition duration-300"
+    >
+      <button
+        className={`radioButton ${songIndex === button.id - 1 ? "font-bold text-black" : ""} transition duration-100`}
+        onClick={() => {
+          setActiveButton(button.id);
+          // setAudioSource(button.song);
+          setSongIndex(button.id - 1);
+          setIsMusicPlaying(true);
+          mutation.mutate({ song_name: button.song });
+        }}
+      >
+        {button.title}
+      </button>
+    </li>
+  ));
+
+  const buttonList3 = lastList.map((button) => (
+    <li
+      key={button.id}
+      className="m-1 text-gray-900 hover:text-gray-200 transition duration-300"
     >
       <button
         className={`radioButton ${songIndex === button.id - 1 ? "font-bold text-black" : ""} transition duration-100`}
@@ -151,31 +192,24 @@ const OtherTunes = () => {
           audioSource={audioSource}
         />
       </div>
-      <Birds isPlaying={isMusicPlaying} />
 
       <div className="flex flex-col items-center h-full space-y-3 -mt-6">
         {/* Loader when mutation is loading */}
-        {mutation.isPending ? (
-          <div className="flex justify-center items-center min-h-[290px] min-w-[290px] max-h-[290px] max-w-[290px] border-3 border-solid border-gray-800 p-4 mt-4 sm:mt-11 flex-shrink-0 shadow-md">
-            <div className="absolute loading loading-ring loading-lg z-10"></div>
-            <div
-              className="h-full w-full bg-cover "
-              style={coverAttheEnd}
-            ></div>
+        <div className="flex flex-row gap-4">{/* <ButtonFold /> */}</div>
 
-            {/* Loader Spinner */}
-          </div>
-        ) : (
-          <div className="relative min-h-[290px] min-w-[290px] max-h-[290px] max-w-[290px] border-2 border-solid border-gray-800 p-4 mt-4 sm:mt-11 flex-shrink-0 shadow-md">
-            <div className="h-full w-full bg-cover" style={coverAttheEnd}></div>{" "}
-            {/* Background */}
-          </div>
-        )}
-
-        <ButtonFold />
-
-        <div id="foldOut">
+        <div>
+          <h2 className="text-black text-lg font-bold p-2">Ivorie</h2>
           <ul className="radioButtons">{buttonList}</ul>
+        </div>
+
+        <div>
+          <h2 className="text-black text-lg font-bold p-2">Rumble Road</h2>
+          <ul className="radioButtons">{buttonList2}</ul>
+        </div>
+
+        <div>
+          <h2 className="text-black text-lg font-bold p-2">Postlude</h2>
+          <ul className="radioButtons">{buttonList3}</ul>
         </div>
       </div>
 
