@@ -4,6 +4,7 @@ import "./App.css";
 import bgMain from "../src/assets/images/lakedark.png";
 import Navbar from "./assets/navbar/navbar";
 import Gallery from "./assets/gallery/Gallery";
+import Gallery2 from "./assets/gallery/Gallery2";
 
 export default function Photos() {
   const [isMusicPlaying, setIsMusicPlaying] = useState(false);
@@ -13,6 +14,15 @@ export default function Photos() {
   const divRef = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [opacity, setOpacity] = useState(0);
+  const [activeGallery, setActiveGallery] = useState(1);
+
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const scrollToTop = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
 
   const toggleAudio = () => {
     if (audioRef.current) {
@@ -70,15 +80,50 @@ export default function Photos() {
           audioSource={audioSource}
         />
       </div>
-
-      {/* Content section that is scrollable */}
-      <div className="flex flex-col items-center overflow-y-auto max-h-[480px] ">
-        <Gallery />
+      <div
+        ref={scrollRef}
+        className="flex flex-col items-center overflow-y-auto max-h-[480px]"
+      >
+        {/* <div className="flex flex-col items-center overflow-y-auto max-h-[480px]"> */}
+        {activeGallery === 1 && <Gallery />}
+        {activeGallery === 2 && <Gallery2 />}
+        {activeGallery === 3 && (
+          <div className="text-white p-4">Coming soon...</div>
+        )}
       </div>
+      {/* Content section that is scrollable */}
+      {/* <div className="flex flex-col items-center overflow-y-auto max-h-[480px] ">
+        <Gallery />
+        <Gallery2 />
+      </div> */}
       <div className="flex justify-center items-center join gap-3 p-1 rounded-full z-10 text-gray-300">
-        <button className="join-item btn">1</button>
-        <button className="join-item btn btn-active">2</button>
-        <button className="join-item btn">3</button>
+        <button
+          className={`join-item btn ${activeGallery === 1 ? "btn-active" : ""}`}
+          onClick={() => {
+            setActiveGallery(1);
+            scrollToTop();
+          }}
+        >
+          1
+        </button>
+        <button
+          className={`join-item btn ${activeGallery === 2 ? "btn-active" : ""}`}
+          onClick={() => {
+            setActiveGallery(2);
+            scrollToTop();
+          }}
+        >
+          2
+        </button>
+        <button
+          className={`join-item btn ${activeGallery === 3 ? "btn-active" : ""}`}
+          onClick={() => {
+            setActiveGallery(3);
+            scrollToTop();
+          }}
+        >
+          3
+        </button>
       </div>
 
       {/* Footer section */}
