@@ -193,22 +193,37 @@ const OtherTunes = () => {
         />
       </div>
 
-      <div className="flex flex-col items-center h-full space-y-3 -mt-6">
-        {/* Loader when mutation is loading */}
-        <div className="flex flex-row gap-4">{/* <ButtonFold /> */}</div>
+      <div className="flex flex-col items-center h-full space-y-3 -mt-6 z-10">
+        <div className="flex flex-row gap-6">{/* <ButtonFold /> */}</div>
 
         <div>
-          <h2 className="text-black text-lg font-bold p-2">Rumble Road</h2>
+          <h2 className="text-black text-lg font-bold p-2 flex items-center">
+            Rumble Road
+            {mutation.isPending && (
+              <div className="ml-2">
+                <div className="loading loading-ring loading-xs text-gray-300" />
+              </div>
+            )}
+          </h2>
           <ul className="radioButtons">{buttonList2}</ul>
         </div>
 
         <div>
-          <h2 className="text-black text-lg font-bold p-2">Ivorie</h2>
+          <h2 className="text-black text-lg font-bold p-2 flex items-center">
+            Ivorie
+            {mutation.isPending && (
+              <div className="ml-2">
+                <div className="loading loading-ring loading-xs text-gray-300" />
+              </div>
+            )}
+          </h2>
           <ul className="radioButtons">{buttonList}</ul>
         </div>
 
         <div>
-          <h2 className="text-black text-lg font-bold p-2">Postlude</h2>
+          <h2 className="text-black text-lg font-bold p-2 flex items-center">
+            Postlude
+          </h2>
           <ul className="radioButtons">{buttonList3}</ul>
         </div>
       </div>
