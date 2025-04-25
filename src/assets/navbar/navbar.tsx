@@ -54,8 +54,8 @@ export default function Navbar({
             onToggle={() => setFoldoutOpen((prevState) => !prevState)}
             className="relative"
           >
-            <summary className="cursor-pointer text-2xl text-black list-none font-bold">
-              <span className="ml-2 pulsing-text">
+            <summary className="cursor-pointer text-2xl text-gray-300 list-none font-bold">
+              <span className="ml-2 ">
                 {/* Custom arrow */}
 
                 {isFoldoutOpen ? ".." : "..."}

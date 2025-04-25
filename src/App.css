@@ -261,3 +261,17 @@ body {
 .pulsing-text {
   animation: pulseText 10s infinite;
 }
+
+@keyframes pulseRedText {
+  0%,
+  100% {
+    color: #dc2626; /* red-600 */
+  }
+  50% {
+    color: #fecaca; /* red-200 */
+  }
+}
+
+.pulsing-text-red {
+  animation: pulseRedText 6s infinite;
+}

@@ -17,7 +17,7 @@ export function ButtonFold() {
   const symbolOut = "v";
   return (
     <button
-      className="ButtonFold shadow-md text-red-500 text-2xl font-bold hover:font-extrabold"
+      className="ButtonFold pulsing-text-red text-red-500 text-2xl font-bold hover:font-extrabold"
       onClick={fadeIn}
     >
       {buttonText}
