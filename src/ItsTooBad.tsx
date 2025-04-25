@@ -56,7 +56,6 @@ export default function ItsTooBad() {
         className={`radioButton ${songIndex === button.id - 1 ? "font-bold text-black" : ""} transition duration-100`}
         onClick={() => {
           setActiveButton(button.id);
-          // setAudioSource(button.song);
           setSongIndex(button.id - 1);
           setIsMusicPlaying(true);
           mutation.mutate({ song_name: button.song });
@@ -186,12 +185,12 @@ export default function ItsTooBad() {
 
         <div
           id="foldOut"
-          className="flex flex-row items-start gap-2 max-h-[140px] overflow-y-auto px-6 min-w-[290px] p-2 mt-10"
+          className="flex flex-row items-start gap-2 max-h-[180px] overflow-y-auto px-6 min-w-[290px] p-2 mt-10"
         >
-          <div>
+          <div className="flex flex-row items-start">
+            <ScrollDownButton />
             <ul className="radioButtons">{buttonList}</ul>
           </div>
-          <ScrollDownButton />
         </div>
       </div>
 

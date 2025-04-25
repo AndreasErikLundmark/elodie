@@ -198,13 +198,13 @@ const OtherTunes = () => {
         <div className="flex flex-row gap-4">{/* <ButtonFold /> */}</div>
 
         <div>
-          <h2 className="text-black text-lg font-bold p-2">Ivorie</h2>
-          <ul className="radioButtons">{buttonList}</ul>
+          <h2 className="text-black text-lg font-bold p-2">Rumble Road</h2>
+          <ul className="radioButtons">{buttonList2}</ul>
         </div>
 
         <div>
-          <h2 className="text-black text-lg font-bold p-2">Rumble Road</h2>
-          <ul className="radioButtons">{buttonList2}</ul>
+          <h2 className="text-black text-lg font-bold p-2">Ivorie</h2>
+          <ul className="radioButtons">{buttonList}</ul>
         </div>
 
         <div>
