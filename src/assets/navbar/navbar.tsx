@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 // import { IoIosPause, IoIosPlay } from "react-icons/io";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { FaCirclePlay } from "react-icons/fa6";
 import { FaPauseCircle } from "react-icons/fa";
 import { PiVinylRecord } from "react-icons/pi";
-import { RxDividerVertical } from "react-icons/rx";
+
 import { HiOutlinePhotograph } from "react-icons/hi";
 import { LuInfo } from "react-icons/lu";
 import { NavLink } from "react-router-dom";
@@ -21,10 +21,6 @@ export default function Navbar({
   audioSource,
 }: NavbarProps) {
   const [isFoldoutOpen, setFoldoutOpen] = useState(false);
-
-  const urlArray = ["/", "/ItsTobadYoureLeaving"];
-
-  const [currentIndex, setCurrentIndex] = useState(0);
 
   return (
     <div className="w-full bg-transparent text-black text-lg">
@@ -60,6 +56,7 @@ export default function Navbar({
             <summary className="cursor-pointer text-2xl text-black list-none font-bold">
               <span className="ml-2 ">
                 {/* Custom arrow */}
+
                 {isFoldoutOpen ? ".." : "..."}
               </span>
             </summary>
