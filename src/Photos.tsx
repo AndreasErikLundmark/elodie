@@ -5,6 +5,7 @@ import bgMain from "../src/assets/images/lakedark.png";
 import Navbar from "./assets/navbar/navbar";
 import Gallery from "./assets/gallery/Gallery";
 import Gallery2 from "./assets/gallery/Gallery2";
+import Gallery3 from "./assets/gallery/Gallery3";
 
 export default function Photos() {
   const [isMusicPlaying, setIsMusicPlaying] = useState(false);
@@ -87,9 +88,7 @@ export default function Photos() {
         {/* <div className="flex flex-col items-center overflow-y-auto max-h-[480px]"> */}
         {activeGallery === 1 && <Gallery />}
         {activeGallery === 2 && <Gallery2 />}
-        {activeGallery === 3 && (
-          <div className="text-white p-4">Coming soon...</div>
-        )}
+        {activeGallery === 3 && <Gallery3 />}
       </div>
       {/* Content section that is scrollable */}
       {/* <div className="flex flex-col items-center overflow-y-auto max-h-[480px] ">

@@ -3,7 +3,6 @@ import p1 from "../images/elodie blue2.jpg";
 import p11 from "../images/blue/17.jpg";
 import p12 from "../images/blue/virvelblå.jpg";
 import p2 from "../images/elodieblue.jpg";
-import p3 from "../images/elodieguitar.jpg";
 import p13 from "../images/blue/evebla.jpg";
 import p14 from "../images/blue/ee4.jpg";
 import p4 from "../images/elodiePinkerton.jpg";
@@ -17,17 +16,13 @@ import p16 from "../images/kvarn/kvarnpe.jpg";
 import p17 from "../images/kvarn/kvarnpe2.jpg";
 import p18 from "../images/kvarn/kvarnsmoke.jpg";
 import p19 from "../images/kvarn/kvarnlamp.jpg";
-import p20 from "../images/andguff3.jpg";
-import p21 from "../images/andreasguffu.jpg";
+
 const images = [
   p1,
   p11,
   p12,
   p13,
   p2,
-  p3,
-  p20,
-  p21,
   p14,
   p4,
   p5,
