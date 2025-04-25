@@ -45,12 +45,6 @@ const images = [
 export default function Gallery() {
   return (
     <>
-      <div className="join gap-4 rounded p-8">
-        <button className="join-item btn">1</button>
-        <button className="join-item btn btn-active">2</button>
-        <button className="join-item btn">3</button>
-        <button className="join-item btn">4</button>
-      </div>
       <div className="flex flex-col gap-4 p-4 bg-slate-900 bg-opacity-50 shadow-md">
         {images.map((img, index) => (
           <div

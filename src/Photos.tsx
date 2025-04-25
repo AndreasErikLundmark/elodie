@@ -72,8 +72,13 @@ export default function Photos() {
       </div>
 
       {/* Content section that is scrollable */}
-      <div className="flex flex-col items-center overflow-y-auto max-h-[500px] ">
+      <div className="flex flex-col items-center overflow-y-auto max-h-[480px] ">
         <Gallery />
+      </div>
+      <div className="flex justify-center items-center join gap-3 p-1 rounded-full z-10 text-gray-300">
+        <button className="join-item btn">1</button>
+        <button className="join-item btn btn-active">2</button>
+        <button className="join-item btn">3</button>
       </div>
 
       {/* Footer section */}
