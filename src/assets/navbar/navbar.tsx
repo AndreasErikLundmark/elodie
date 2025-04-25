@@ -8,6 +8,7 @@ import { PiVinylRecord } from "react-icons/pi";
 import { HiOutlinePhotograph } from "react-icons/hi";
 import { LuInfo } from "react-icons/lu";
 import { NavLink } from "react-router-dom";
+import { RiFolderDownloadLine } from "react-icons/ri";
 
 interface NavbarProps {
   isMusicPlaying: boolean;
@@ -75,15 +76,6 @@ export default function Navbar({
               }}
             >
               <li className="m-2">
-                <a
-                  href="https://sv.wikipedia.org/wiki/%C3%89lodie"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <LuInfo />
-                </a>
-              </li>
-              <li className="m-2">
                 <Link to="/photos">
                   <HiOutlinePhotograph />
                 </Link>
@@ -108,6 +100,24 @@ export default function Navbar({
                 >
                   <PiVinylRecord />
                 </NavLink>
+              </li>
+              <li className="m-2">
+                <a
+                  href="https://sv.wikipedia.org/wiki/%C3%89lodie"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <LuInfo />
+                </a>
+              </li>
+              <li className="m-2">
+                <a
+                  href="https://sv.wikipedia.org/wiki/%C3%89lodie"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <RiFolderDownloadLine />
+                </a>
               </li>
             </ul>
           </details>
