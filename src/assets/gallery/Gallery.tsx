@@ -45,11 +45,11 @@ const images = [
 export default function Gallery() {
   return (
     <>
-      <div className="flex flex-col gap-4 p-4 bg-slate-900 bg-opacity-50 shadow-md">
+      <div className="flex flex-col gap-4 p-2 bg-slate-900 bg-opacity-50 shadow-md">
         {images.map((img, index) => (
           <div
             key={index}
-            className="p-2 shadow-md bg-[#fef8f2] rounded size-80 overflow-hidden"
+            className="p-2 shadow-md bg-[#fef8f2] rounded h-[21rem] w-[21rem] overflow-hidden"
           >
             <img
               src={img}

@@ -82,7 +82,7 @@ export default function Photos() {
       </div>
       <div
         ref={scrollRef}
-        className="flex flex-col items-center overflow-y-auto max-h-[480px]"
+        className="flex flex-col items-center overflow-y-auto h-screen"
       >
         {/* <div className="flex flex-col items-center overflow-y-auto max-h-[480px]"> */}
         {activeGallery === 1 && <Gallery />}
@@ -96,7 +96,7 @@ export default function Photos() {
         <Gallery />
         <Gallery2 />
       </div> */}
-      <div className="flex justify-center items-center join gap-3 p-1 rounded-full z-10 text-gray-300">
+      <div className="fixed bottom-0 w-full justify-center items-center join gap-3 p-1 rounded-lg z-10 text-gray-100">
         <button
           className={`join-item btn ${activeGallery === 1 ? "btn-active" : ""}`}
           onClick={() => {
