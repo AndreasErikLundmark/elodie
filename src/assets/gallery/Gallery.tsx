@@ -1,7 +1,7 @@
 import "react-photo-album/rows.css";
 import p1 from "../images/elodie blue2.jpg";
 import p11 from "../images/blue/17.jpg";
-import p12 from "../images/blue/virvelblå.jpg";
+import p12 from "../images/blue/virvelbla.jpg";
 import p2 from "../images/elodieblue.jpg";
 import p13 from "../images/blue/evebla.jpg";
 import p14 from "../images/blue/ee4.jpg";
@@ -10,12 +10,12 @@ import p5 from "../images/elodiePinkerton2.jpg";
 import p6 from "../images/elodieKvarnbyn.jpg";
 import p7 from "../images/elodieDrums.jpg";
 import p8 from "../images/elodieKvarn2.jpg";
-import p9 from "../images/blue/ekvarngrill.jpg";
-import p10 from "../images/kvarn/kvarnhenkpe.jpg";
-import p16 from "../images/kvarn/kvarnpe.jpg";
-import p17 from "../images/kvarn/kvarnpe2.jpg";
+import p9 from "../images/blue/egrill.jpg";
+import p10 from "../images/kvarn/kvarnhenkp.jpg";
+import p16 from "../images/kvarn/kvarnpeder.jpg";
+import p17 from "../images/kvarn/kvarnpewalk.jpg";
 import p18 from "../images/kvarn/kvarnsmoke.jpg";
-import p19 from "../images/kvarn/kvarnlamp.jpg";
+import p19 from "../images/kvarn/kvarnlampa.jpg";
 
 const images = [
   p1,

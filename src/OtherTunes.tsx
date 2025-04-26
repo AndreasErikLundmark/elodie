@@ -2,7 +2,6 @@ import { useState, useRef, useEffect } from "react";
 import "./App.css";
 // import bg from "../src/assets/images/atendbg.png";
 import bgMain from "../src/assets/images/lakedarkblue.png";
-import { ButtonFold } from "./assets/buttons/buttonFold";
 import Navbar from "./assets/navbar/navbar";
 import { useMutation } from "@tanstack/react-query";
 import { fetchSong } from "./assets/api/api";
