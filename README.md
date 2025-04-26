@@ -1,5 +1,7 @@
 # Audio showreel, React + TypeScript + Vite + Tailwind
 
+GCP FE: https://elodie8-553713419771.europe-north1.run.app
+
 Runs on 8080
 
 Install everything.... 
