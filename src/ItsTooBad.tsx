@@ -47,19 +47,17 @@ export default function ItsTooBad() {
     backgroundSize: "cover",
   };
 
-  const symbol = ">";
-  const symbolOut = "v";
-  const fadeIn = () => {
-    const element = document.getElementById("foldOut");
-    if (element)
-      if (element?.classList.contains("fade-in")) {
-        element.classList.remove("fade-in");
-        setButtonText(symbol);
-      } else {
-        element.classList.add("fade-in");
-        setButtonText(symbolOut);
-      }
-  };
+  // const fadeIn = () => {
+  //   const element = document.getElementById("foldOut");
+  //   if (element)
+  //     if (element?.classList.contains("fade-in")) {
+  //       element.classList.remove("fade-in");
+  //       setButtonText(symbol);
+  //     } else {
+  //       element.classList.add("fade-in");
+  //       setButtonText(symbolOut);
+  //     }
+  // };
 
   const buttonList = originalButtonList.map((button) => (
     <li
@@ -176,10 +174,7 @@ export default function ItsTooBad() {
         />
       </div>
 
-      <div
-        onClick={fadeIn}
-        className="flex flex-col items-center h-full space-y-3 -mt-6"
-      >
+      <div className="flex flex-col items-center h-full space-y-3 -mt-6">
         {mutation.isPending ? (
           <div className="flex justify-center items-center min-h-[290px] min-w-[290px] max-h-[290px] max-w-[290px] border-3 border-solid border-gray-800 p-4 mt-4 sm:mt-11 flex-shrink-0 shadow-md bg-[#fef8f2]">
             <div className="absolute text-black loading loading-ring loading-lg z-10"></div>

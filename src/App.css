@@ -275,5 +275,5 @@ body {
 }
 
 .pulsing-text-red {
-  animation: pulseRedText 6s infinite;
+  animation: pulseRedText 3s infinite;
 }
