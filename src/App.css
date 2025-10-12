@@ -48,13 +48,15 @@
   font-family: "Karla", serif;
   font-optical-sizing: auto;
   font-weight: 300;
-  /* font-style: normal; */
 }
 
 body {
   font-family: "Karla", serif;
   font-weight: 300;
-  /* font-style: normal; */
+}
+#mainDiv {
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 #foldOut {
@@ -240,11 +242,11 @@ body {
   }
 
   51% {
-    transform: translateY(0vh) translateX(110vw) scale(0.45);
+    transform: translateY(0vh) translateX(100vw) scale(0.45);
   }
 
   100% {
-    transform: translateY(0vh) translateX(110vw) scale(0.45);
+    transform: translateY(0vh) translateX(100vw) scale(0.45);
   }
 }
 

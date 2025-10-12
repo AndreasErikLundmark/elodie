@@ -107,8 +107,9 @@ const App = () => {
 
   return (
     <div
+      id="mainDiv"
       ref={divRef}
-      className="w-full h-screen bg-[#f8f8f8] relative "
+      className="w-full h-screen bg-[#f8f8f8] relative"
       style={{
         backgroundImage: `url(${bgMain})`,
         backgroundSize: "cover",
