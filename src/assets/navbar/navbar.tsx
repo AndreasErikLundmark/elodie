@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 // import { IoIosPause, IoIosPlay } from "react-icons/io";
 import { Link } from "react-router-dom";
 import { FaCirclePlay } from "react-icons/fa6";

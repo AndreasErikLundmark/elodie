@@ -93,7 +93,7 @@ const OtherTunes = () => {
   const buttonList3 = lastList.map((button) => (
     <li
       key={button.id}
-      className="m-1 text-gray-900 hover:text-gray-200 transition duration-300"
+      className="m-1 text-gray-700 hover:text-gray-200 transition duration-300 text-base"
     >
       <button
         className={`radioButton ${songIndex === button.id - 1 ? "font-bold text-black" : ""} transition duration-100`}
