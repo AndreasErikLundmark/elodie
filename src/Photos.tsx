@@ -23,6 +23,7 @@ export default function Photos() {
     if (scrollRef.current) {
       scrollRef.current.scrollTo({ top: 0, behavior: "smooth" });
     }
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const toggleAudio = () => {
@@ -49,6 +50,7 @@ export default function Photos() {
 
   return (
     <div
+      id="mainDiv"
       ref={divRef}
       className="w-full min-h-screen bg-[#f8f8f8] relative"
       style={{
