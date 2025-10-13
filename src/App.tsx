@@ -41,7 +41,7 @@ const App = () => {
   const buttonList = originalButtonList.map((button) => (
     <li
       key={button.id}
-      className="m-1 text-gray-900 hover:text-gray-700 transition duration-300 text-base"
+      className="m-1 text-gray-900 hover:text-gray-700 transition duration-300 text-[17px]"
     >
       <button
         className={`radioButton ${songIndex === button.id - 1 ? "font-bold text-black" : ""} transition duration-100`}
@@ -145,7 +145,7 @@ const App = () => {
       <div className="flex flex-col items-center h-full space-y-3 -mt-6">
         {/* Loader when mutation is loading */}
         {mutation.isPending ? (
-          <div className="flex justify-center items-center min-h-[290px] min-w-[290px] max-h-[290px] max-w-[290px] border-3 border-solid border-gray-800 p-4 mt-4 sm:mt-11 flex-shrink-0 shadow-md">
+          <div className="flex justify-center items-center min-h-[286px] min-w-[286px] max-h-[286px] max-w-[286px] border-3 border-solid border-gray-800 p-4 mt-4 sm:mt-11 flex-shrink-0 shadow-md">
             <div className="absolute loading loading-ring loading-lg z-10"></div>
             <div
               className="h-full w-full bg-cover "

@@ -30,7 +30,7 @@ export default function Navbar({
         {/* Play/Pause Button */}
         <button
           onClick={onPlayPause}
-          className={`text-xl ${audioSource === null ? "text-gray-200 cursor-not-allowed" : ""}`}
+          className={`text-xl ${audioSource === null ? "text-gray-200 opacity-80 cursor-not-allowed" : ""}`}
           disabled={audioSource === null}
         >
           {/* {isMusicPlaying ? <IoIosPause /> : <IoIosPlay />} */}
@@ -54,7 +54,7 @@ export default function Navbar({
             onToggle={() => setFoldoutOpen((prevState) => !prevState)}
             className="relative"
           >
-            <summary className="cursor-pointer text-3xl text-gray-200 list-none font-bold">
+            <summary className="cursor-pointer text-3xl text-gray-200 list-none font-bold opacity-80">
               <span className="ml-2 ">
                 {/* Custom arrow */}
 

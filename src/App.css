@@ -265,12 +265,12 @@ body {
 }
 
 @keyframes pulseRedText {
-  0%,
+  10%,
   100% {
-    color: #dc2626; /* red-600 */
+    color: hsl(0, 84%, 61%); /* red-800 */
   }
   50% {
-    color: #fecaca; /* red-200 */
+    color: rgb(221, 126, 126); /* red-400 */
   }
 }
 

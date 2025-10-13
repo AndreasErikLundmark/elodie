@@ -62,7 +62,7 @@ export default function ItsTooBad() {
   const buttonList = originalButtonList.map((button) => (
     <li
       key={button.id}
-      className="m-1 text-gray-900 hover:text-gray-200 transition duration-300 text-lg"
+      className="m-1 text-gray-900 hover:text-gray-200 transition duration-300 text-[17px]"
     >
       <button
         className={`radioButton ${songIndex === button.id - 1 ? "font-bold text-black" : ""} transition duration-100`}
@@ -198,7 +198,7 @@ export default function ItsTooBad() {
 
         <div
           id="foldOut"
-          className="flex flex-row items-start gap-2 max-h-[180px] overflow-y-auto px-6 min-w-[290px] p-2 mt-10"
+          className="flex flex-row items-start gap-2 max-h-[180px] overflow-y-auto px-6 min-w-[290px] p-2 mt-10 text-lg"
         >
           <div className="flex flex-row items-start">
             <ScrollDownButton />
