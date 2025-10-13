@@ -18,12 +18,6 @@ import p18 from "../images/kvarn/kvarnsmoke.jpg";
 import p19 from "../images/kvarn/kvarnlampa.jpg";
 
 const images = [
-  p1,
-  p11,
-  p12,
-  p13,
-  p2,
-  p14,
   p4,
   p5,
   p6,
@@ -35,6 +29,12 @@ const images = [
   p17,
   p18,
   p19,
+  p1,
+  p11,
+  p12,
+  p13,
+  p2,
+  p14,
 ];
 
 export default function Gallery() {

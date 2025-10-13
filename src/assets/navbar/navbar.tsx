@@ -76,12 +76,6 @@ export default function Navbar({
               }}
             >
               <li className="m-2">
-                <Link to="/photos">
-                  <HiOutlinePhotograph />
-                </Link>
-                {/* <a href="#">Gallery</a> */}
-              </li>
-              <li className="m-2">
                 <NavLink
                   to="/"
                   className={({ isActive }) =>
@@ -110,6 +104,12 @@ export default function Navbar({
                 >
                   <PiVinylRecord />
                 </NavLink>
+              </li>
+              <li className="m-2">
+                <Link to="/photos">
+                  <HiOutlinePhotograph />
+                </Link>
+                {/* <a href="#">Gallery</a> */}
               </li>
               <li className="m-2">
                 <a
