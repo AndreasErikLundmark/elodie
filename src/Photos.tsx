@@ -77,11 +77,7 @@ export default function Photos() {
       />
 
       <div className="header flex justify-center items-center py-4">
-        <Navbar
-          isMusicPlaying={isMusicPlaying}
-          onPlayPause={toggleAudio}
-          audioSource={audioSource}
-        />
+        <Navbar isMusicPlaying={false} onPlayPause={null} audioSource={null} />
       </div>
       <div
         ref={scrollRef}

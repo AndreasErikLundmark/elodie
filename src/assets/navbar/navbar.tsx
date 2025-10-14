@@ -12,7 +12,7 @@ import { RiFolderDownloadLine } from "react-icons/ri";
 
 interface NavbarProps {
   isMusicPlaying: boolean;
-  onPlayPause: () => void;
+  onPlayPause: (() => void) | null;
   audioSource: string | null;
 }
 
@@ -28,14 +28,19 @@ export default function Navbar({
       {/* Navbar div */}
       <div className="relative flex justify-between items-center py-4 px-8">
         {/* Play/Pause Button */}
-        <button
-          onClick={onPlayPause}
-          className={`text-xl ${audioSource === null ? "text-gray-200 opacity-80 cursor-not-allowed" : ""}`}
-          disabled={audioSource === null}
-        >
-          {/* {isMusicPlaying ? <IoIosPause /> : <IoIosPlay />} */}
-          {isMusicPlaying ? <FaPauseCircle /> : <FaCirclePlay />}
-        </button>
+        {onPlayPause && (
+          <button
+            onClick={onPlayPause}
+            className={`text-xl ${
+              audioSource === null
+                ? "text-gray-200 opacity-80 cursor-not-allowed"
+                : ""
+            }`}
+            disabled={audioSource === null}
+          >
+            {isMusicPlaying ? <FaPauseCircle /> : <FaCirclePlay />}
+          </button>
+        )}
 
         <div className="absolute left-1/2 transform -translate-x-1/2">
           <h1
@@ -112,13 +117,14 @@ export default function Navbar({
                 {/* <a href="#">Gallery</a> */}
               </li>
               <li className="m-2">
-                <a
-                  href="https://sv.wikipedia.org/wiki/%C3%89lodie"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <NavLink
+                  to="/Info"
+                  className={({ isActive }) =>
+                    isActive ? "text-black font-bold" : "text-gray-300"
+                  }
                 >
                   <LuInfo />
-                </a>
+                </NavLink>
               </li>
               <li className="m-2">
                 <a
