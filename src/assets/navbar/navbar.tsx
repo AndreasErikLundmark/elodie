@@ -69,7 +69,7 @@ export default function Navbar({
 
             {/* Foldout Menu */}
             <ul
-              className={`bg-gray-950 bg-opacity-90 text-2xl gap-4 rounded-md z-1 text-gray-300 p-4 shadow-none border-solid border-1 border-black z-50 transition-opacity duration-500 ease-in-out ${
+              className={`bg-gray-950 bg-opacity-90 text-2xl gap-4 rounded-md z-100 text-gray-300 p-4 shadow-none border-solid border-1 border-black z-50 transition-opacity duration-500 ease-in-out ${
                 isFoldoutOpen ? "opacity-100" : "opacity-0 pointer-events-none"
               }`}
               style={{
