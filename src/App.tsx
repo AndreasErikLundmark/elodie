@@ -5,59 +5,67 @@ import bgMain from "../src/assets/images/lake.png";
 import { ButtonFold } from "./assets/buttons/buttonFold";
 import Navbar from "./assets/navbar/navbar";
 import Birds from "./assets/birds/birds";
-import { useMutation } from "@tanstack/react-query";
-import { fetchSong } from "./assets/api/api";
 
-// const GET_URL = "https://audiostreamer-697604347968.us-central1.run.app/audio/";
+import song1 from "./assets/mp3/1 - élodie.mp3";
+import song2 from "./assets/mp3/2 - élodie.mp3";
+import song3 from "./assets/mp3/3 - élodie.mp3";
+import song4 from "./assets/mp3/4 - élodie.mp3";
+import song5 from "./assets/mp3/5 - élodie.mp3";
+
 const App = () => {
   const originalButtonList = [
-    { id: 1, title: "1. Be My Ghost", song: "01%20Be%20My%20Ghost.mp3" },
-    {
-      id: 2,
-      title: "2. At the End of the Line",
-      song: "02%20At%20The%20End%20Of%20The%20Line.mp3",
-    },
-    { id: 3, title: "3. Mandarine #2", song: "03%20Mandarine%20%232.mp3" },
-    { id: 4, title: "4. Make-up killers", song: "04%20Make-up%20Killers.mp3" },
-    { id: 5, title: "5. Overload", song: "05%20Overload.mp3" },
+    { id: 1, title: "1. Be My Ghost", song: song1 },
+    { id: 2, title: "2. At the End of the Line", song: song2 },
+    { id: 3, title: "3. Mandarine #2", song: song3 },
+    { id: 4, title: "4. Make-up Killers", song: song4 },
+    { id: 5, title: "5. Overload", song: song5 },
   ];
 
   const [activeButton, setActiveButton] = useState<number | null>(null);
   const [isMusicPlaying, setIsMusicPlaying] = useState(false);
   const [audioSource, setAudioSource] = useState<string | null>(null);
   const [songIndex, setSongIndex] = useState<number>(-1);
+  const [isAudioLoading, setIsAudioLoading] = useState(false);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const divRef = useRef<HTMLDivElement>(null);
+  const loadingTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [opacity, setOpacity] = useState(0);
 
-  const coverAttheEnd = {
+  const coverAtTheEnd = {
     backgroundImage: `url(${bg})`,
     backgroundPosition: "center",
     backgroundSize: "cover",
   };
 
-  const buttonList = originalButtonList.map((button) => (
+  // Handle song selection
+  const handleSelectSong = (index: number) => {
+    setActiveButton(originalButtonList[index].id);
+    setSongIndex(index);
+    setIsMusicPlaying(true);
+    setAudioSource(originalButtonList[index].song);
+  };
+
+  // Build list of buttons
+  const buttonList = originalButtonList.map((button, index) => (
     <li
       key={button.id}
       className="m-1 text-gray-900 hover:text-gray-700 transition duration-300 text-[17px]"
     >
       <button
-        className={`radioButton ${songIndex === button.id - 1 ? "font-bold text-black" : ""} transition duration-100`}
-        onClick={() => {
-          setActiveButton(button.id);
-          // setAudioSource(button.song);
-          setSongIndex(button.id - 1);
-          setIsMusicPlaying(true);
-          mutation.mutate({ song_name: button.song });
-        }}
+        className={`radioButton ${
+          songIndex === index ? "font-bold text-black" : ""
+        } transition duration-100`}
+        onClick={() => handleSelectSong(index)}
       >
         {button.title}
       </button>
     </li>
   ));
 
+  // Toggle audio play/pause
   const toggleAudio = () => {
     if (audioRef.current) {
       if (audioRef.current.paused) {
@@ -69,41 +77,41 @@ const App = () => {
     }
   };
 
+  // Handle auto-play next song
   const handleSongEnd = () => {
     const nextSongIndex = (songIndex + 1) % originalButtonList.length;
     const nextSong = originalButtonList[nextSongIndex]?.song;
-
-    console.log("next song is:", nextSongIndex, nextSong);
-
     if (nextSong) {
       setSongIndex(nextSongIndex);
-      // setAudioSource(nextSong);
-      mutation.mutate({ song_name: nextSong });
-    } else {
-      console.error(
-        "Next song is undefined! Something went wrong with the song list."
-      );
+      setAudioSource(nextSong);
     }
   };
 
+  // Load and play selected song
   useEffect(() => {
     if (audioSource && audioRef.current) {
       audioRef.current.load();
-      audioRef.current.play();
+      audioRef.current.play().catch(() => {});
     }
   }, [audioSource]);
 
-  const mutation = useMutation({
-    mutationFn: async ({ song_name }: { song_name: string }) => {
-      return await fetchSong(song_name);
-    },
-    onSuccess: (responseData) => {
-      setAudioSource(responseData);
-    },
-    onError: (error) => {
-      console.error("Error fetching song:", error);
-    },
-  });
+  // Spinner delay logic (shows only if load > 2s)
+  const handleLoadStart = () => {
+    if (loadingTimeoutRef.current) clearTimeout(loadingTimeoutRef.current);
+    loadingTimeoutRef.current = setTimeout(() => {
+      setIsAudioLoading(true);
+    }, 2000);
+  };
+
+  const handleCanPlayThrough = () => {
+    if (loadingTimeoutRef.current) clearTimeout(loadingTimeoutRef.current);
+    setIsAudioLoading(false);
+  };
+
+  const handleAudioError = () => {
+    if (loadingTimeoutRef.current) clearTimeout(loadingTimeoutRef.current);
+    setIsAudioLoading(false);
+  };
 
   return (
     <div
@@ -125,14 +133,16 @@ const App = () => {
       onMouseEnter={() => setOpacity(0.3)}
       onMouseLeave={() => setOpacity(0)}
     >
+      {/* Mouse lighting effect */}
       <div
-        className="pointer-events-none absolute inset-0 transition duration-300 "
+        className="pointer-events-none absolute inset-0 transition duration-300"
         style={{
           opacity,
           background: `radial-gradient(400px circle at ${position.x}px ${position.y}px, rgba(255,255,255,0.8), rgba(255,255,255,0) 50%)`,
         }}
       />
 
+      {/* Navbar */}
       <div className="header flex justify-center items-center py-4">
         <Navbar
           isMusicPlaying={isMusicPlaying}
@@ -140,44 +150,43 @@ const App = () => {
           audioSource={audioSource}
         />
       </div>
+
       <Birds isPlaying={isMusicPlaying} />
 
+      {/* Album cover + loading spinner */}
       <div className="flex flex-col items-center h-full space-y-3 -mt-6">
-        {/* Loader when mutation is loading */}
-        {mutation.isPending ? (
-          <div className="flex justify-center items-center min-h-[286px] min-w-[286px] max-h-[286px] max-w-[286px] border-3 border-solid border-gray-800 p-4 mt-4 sm:mt-11 flex-shrink-0 shadow-md">
-            <div className="absolute loading loading-ring loading-lg z-10"></div>
-            <div
-              className="h-full w-full bg-cover "
-              style={coverAttheEnd}
-            ></div>
-
-            {/* Loader Spinner */}
-          </div>
-        ) : (
-          <div className="relative min-h-[290px] min-w-[290px] max-h-[290px] max-w-[290px] border-2 border-solid border-gray-800 p-4 mt-4 sm:mt-11 flex-shrink-0 shadow-md">
-            <div className="h-full w-full bg-cover" style={coverAttheEnd}></div>{" "}
-            {/* Background */}
-          </div>
-        )}
+        <div className="relative min-h-[290px] min-w-[290px] max-h-[290px] max-w-[290px] border-2 border-gray-800 p-4 mt-4 sm:mt-11 shadow-md ">
+          <div className="h-full w-full bg-cover" style={coverAtTheEnd}></div>
+          {isAudioLoading && (
+            <div className="absolute inset-0 flex items-center justify-center bg-[#fef8f280] transition-opacity duration-300">
+              <div className="loading loading-ring loading-lg text-black"></div>
+            </div>
+          )}
+        </div>
 
         <ButtonFold />
 
+        {/* Song List */}
         <div id="foldOut">
           <ul className="radioButtons">{buttonList}</ul>
         </div>
       </div>
 
+      {/* Audio Player */}
       <footer className="bg-white w-full hidden">
         <div className="audio-player hidden fixed bottom-0 left-0 right-0 p-4 bg-white shadow-lg">
           <audio
             ref={audioRef}
             controls
+            preload="metadata"
             src={audioSource || undefined}
             autoPlay={isMusicPlaying}
             onPlay={() => setIsMusicPlaying(true)}
             onPause={() => setIsMusicPlaying(false)}
             onEnded={handleSongEnd}
+            onLoadStart={handleLoadStart}
+            onCanPlayThrough={handleCanPlayThrough}
+            onError={handleAudioError}
           >
             Your browser does not support the audio element.
           </audio>
