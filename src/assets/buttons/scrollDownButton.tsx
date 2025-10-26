@@ -5,7 +5,7 @@ export default function ScrollDownButton() {
     const container = document.getElementById("foldOut");
     if (!container) return;
 
-    const scrollAmount = 120; // Adjust this for more/less scroll per click
+    const scrollAmount = 150; // Adjust this for more/less scroll per click
 
     if (direction === "down") {
       container.scrollBy({ top: scrollAmount, behavior: "smooth" });
