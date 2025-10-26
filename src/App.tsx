@@ -40,7 +40,6 @@ const App = () => {
     backgroundSize: "cover",
   };
 
-  // Handle song selection
   const handleSelectSong = (index: number) => {
     setActiveButton(originalButtonList[index].id);
     setSongIndex(index);
@@ -48,11 +47,10 @@ const App = () => {
     setAudioSource(originalButtonList[index].song);
   };
 
-  // Build list of buttons
   const buttonList = originalButtonList.map((button, index) => (
     <li
       key={button.id}
-      className="m-1 text-gray-900 hover:text-gray-700 transition duration-300 text-[17px]"
+      className="m-1 text-gray-900 hover:text-white transition duration-300 text-[17px]"
     >
       <button
         className={`radioButton ${
@@ -65,7 +63,6 @@ const App = () => {
     </li>
   ));
 
-  // Toggle audio play/pause
   const toggleAudio = () => {
     if (audioRef.current) {
       if (audioRef.current.paused) {
@@ -77,7 +74,6 @@ const App = () => {
     }
   };
 
-  // Handle auto-play next song
   const handleSongEnd = () => {
     const nextSongIndex = (songIndex + 1) % originalButtonList.length;
     const nextSong = originalButtonList[nextSongIndex]?.song;
@@ -87,7 +83,6 @@ const App = () => {
     }
   };
 
-  // Load and play selected song
   useEffect(() => {
     if (audioSource && audioRef.current) {
       audioRef.current.load();
@@ -95,7 +90,6 @@ const App = () => {
     }
   }, [audioSource]);
 
-  // Spinner delay logic (shows only if load > 2s)
   const handleLoadStart = () => {
     if (loadingTimeoutRef.current) clearTimeout(loadingTimeoutRef.current);
     loadingTimeoutRef.current = setTimeout(() => {

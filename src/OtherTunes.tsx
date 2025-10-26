@@ -1,52 +1,58 @@
 import { useState, useRef, useEffect } from "react";
 import "./App.css";
-// import bg from "../src/assets/images/atendbg.png";
 import bgMain from "../src/assets/images/lakedarkblue.png";
 import Navbar from "./assets/navbar/navbar";
-import { useMutation } from "@tanstack/react-query";
-import { fetchSong } from "./assets/api/api";
 
-// const GET_URL = "https://audiostreamer-697604347968.us-central1.run.app/audio/";
+// Ivorie
+import song1 from "./assets/mp3/Ivorie/01 Track 1.mp3";
+import song2 from "./assets/mp3/Ivorie/02 Track 2.mp3";
+import song3 from "./assets/mp3/Ivorie/03 Track 3.mp3";
+import song4 from "./assets/mp3/Ivorie/04 Track 4.mp3";
+import song5 from "./assets/mp3/Ivorie/05 Track 5.mp3";
+import song6 from "./assets/mp3/Ivorie/06 Track 6.mp3";
+import song7 from "./assets/mp3/Ivorie/07 Track 7.mp3";
+import song8 from "./assets/mp3/Ivorie/08 Track 8.mp3";
+import song9 from "./assets/mp3/Ivorie/09 Track 9.mp3";
+
+// Rumble Road
+import song10 from "./assets/mp3/elodie rumbleroad/rumble road/01 Track 1.mp3";
+import song11 from "./assets/mp3/elodie rumbleroad/rumble road/02 Track 2.mp3";
+import song12 from "./assets/mp3/elodie rumbleroad/rumble road/03 Track 3.mp3";
+
+// PostLude
+import song13 from "./assets/mp3/postlude/epilouge.wav";
+
 const OtherTunes = () => {
   const originalButtonList = [
-    { id: 1, title: "1. Intro", song: "01%20Intro.mp3" },
-    {
-      id: 2,
-      title: "2. Kill One More Day",
-      song: "02%20Kill%20One%20More%20Day.mp3",
-    },
-    { id: 3, title: "3. Mandarine", song: "03%20Jannowitzbrücke%20first.mp3" },
-    { id: 4, title: "4. Timeless", song: "04%20Timeless.mp3" },
-    { id: 5, title: "5. Bwana Tembo", song: "05%20Bwana%20Tembo.mp3" },
-    { id: 6, title: "6. See you", song: "06%20See%20You.mp3" },
-    {
-      id: 7,
-      title: "7. Marshmallow Man",
-      song: "07%20Marshmallow%20Man%20first.mp3",
-    },
-    { id: 8, title: "8. Mandarine", song: "08%20Mandarine.mp3" },
-    {
-      id: 9,
-      title: "9. Le Soleil Brille",
-      song: "09%20Le%20Soleil%20Brille.mp3",
-    },
+    { id: 1, title: "1. dsre ave", song: song1 },
+    { id: 2, title: "2. Kill One More Day", song: song2 },
+    { id: 3, title: "3. Jannowitzbrücke", song: song3 },
+    { id: 4, title: "4. Timeless", song: song4 },
+    { id: 5, title: "5. Bwana Tembo", song: song5 },
+    { id: 6, title: "6. See you", song: song6 },
+    { id: 7, title: "7. Marshmallow Man", song: song7 },
+    { id: 8, title: "8. Mandarine", song: song8 },
+    { id: 9, title: "9. Le Soleil Brille", song: song9 },
   ];
 
   const rumbleList = [
-    { id: 10, title: "1. Marshmallow Man", song: "01%20Marshmallow%20man.mp3" },
-    { id: 11, title: "2. Jannowitzbrücke", song: "02%20Jannowitzbrücke.mp3" },
-    { id: 12, title: "3. Cosmonaut", song: "03%20Cosmonaut.mp3" },
+    { id: 10, title: "1. Marshmallow Man", song: song10 },
+    { id: 11, title: "2. Jannowitzbrücke", song: song11 },
+    { id: 12, title: "3. Cosmonaut", song: song12 },
   ];
 
-  const lastList = [{ id: 13, title: "1. Epilogue", song: "epilouge.wav" }];
+  const lastList = [{ id: 13, title: "1. Epilogue", song: song13 }];
 
   const [activeButton, setActiveButton] = useState<number | null>(null);
   const [isMusicPlaying, setIsMusicPlaying] = useState(false);
   const [audioSource, setAudioSource] = useState<string | null>(null);
   const [songIndex, setSongIndex] = useState<number>(-1);
+  const [isAudioLoading, setIsAudioLoading] = useState(false);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const divRef = useRef<HTMLDivElement>(null);
+  const loadingTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [opacity, setOpacity] = useState(0);
 
@@ -56,13 +62,14 @@ const OtherTunes = () => {
       className="m-1 text-gray-900 hover:text-gray-200 transition duration-300"
     >
       <button
-        className={`radioButton ${songIndex === button.id - 1 ? "font-bold text-black" : ""} transition duration-100`}
+        className={`radioButton ${
+          songIndex === button.id - 1 ? "font-bold text-black" : ""
+        } transition duration-100`}
         onClick={() => {
           setActiveButton(button.id);
-          // setAudioSource(button.song);
           setSongIndex(button.id - 1);
           setIsMusicPlaying(true);
-          mutation.mutate({ song_name: button.song });
+          setAudioSource(button.song);
         }}
       >
         {button.title}
@@ -76,13 +83,14 @@ const OtherTunes = () => {
       className="m-1 text-gray-900 hover:text-gray-200 transition duration-300"
     >
       <button
-        className={`radioButton ${songIndex === button.id - 1 ? "font-bold text-black" : ""} transition duration-100`}
+        className={`radioButton ${
+          songIndex === button.id - 1 ? "font-bold text-black" : ""
+        } transition duration-100`}
         onClick={() => {
           setActiveButton(button.id);
-          // setAudioSource(button.song);
           setSongIndex(button.id - 1);
           setIsMusicPlaying(true);
-          mutation.mutate({ song_name: button.song });
+          setAudioSource(button.song);
         }}
       >
         {button.title}
@@ -96,13 +104,14 @@ const OtherTunes = () => {
       className="m-1 text-gray-700 hover:text-gray-200 transition duration-300 text-base"
     >
       <button
-        className={`radioButton ${songIndex === button.id - 1 ? "font-bold text-black" : ""} transition duration-100`}
+        className={`radioButton ${
+          songIndex === button.id - 1 ? "font-bold text-black" : ""
+        } transition duration-100`}
         onClick={() => {
           setActiveButton(button.id);
-          // setAudioSource(button.song);
           setSongIndex(button.id - 1);
           setIsMusicPlaying(true);
-          mutation.mutate({ song_name: button.song });
+          setAudioSource(button.song);
         }}
       >
         {button.title}
@@ -124,17 +133,9 @@ const OtherTunes = () => {
   const handleSongEnd = () => {
     const nextSongIndex = (songIndex + 1) % originalButtonList.length;
     const nextSong = originalButtonList[nextSongIndex]?.song;
-
-    console.log("next song is:", nextSongIndex, nextSong);
-
     if (nextSong) {
       setSongIndex(nextSongIndex);
-      // setAudioSource(nextSong);
-      mutation.mutate({ song_name: nextSong });
-    } else {
-      console.error(
-        "Next song is undefined! Something went wrong with the song list."
-      );
+      setAudioSource(nextSong);
     }
   };
 
@@ -145,17 +146,22 @@ const OtherTunes = () => {
     }
   }, [audioSource]);
 
-  const mutation = useMutation({
-    mutationFn: async ({ song_name }: { song_name: string }) => {
-      return await fetchSong(song_name);
-    },
-    onSuccess: (responseData) => {
-      setAudioSource(responseData);
-    },
-    onError: (error) => {
-      console.error("Error fetching song:", error);
-    },
-  });
+  const handleLoadStart = () => {
+    if (loadingTimeoutRef.current) clearTimeout(loadingTimeoutRef.current);
+    loadingTimeoutRef.current = setTimeout(() => {
+      setIsAudioLoading(true);
+    }, 2000);
+  };
+
+  const handleCanPlayThrough = () => {
+    if (loadingTimeoutRef.current) clearTimeout(loadingTimeoutRef.current);
+    setIsAudioLoading(false);
+  };
+
+  const handleAudioError = () => {
+    if (loadingTimeoutRef.current) clearTimeout(loadingTimeoutRef.current);
+    setIsAudioLoading(false);
+  };
 
   return (
     <div
@@ -194,12 +200,12 @@ const OtherTunes = () => {
       </div>
 
       <div className="flex flex-col items-center h-full space-y-3 -mt-6 z-10">
-        <div className="flex flex-row gap-6">{/* <ButtonFold /> */}</div>
+        <div className="flex flex-row gap-6"></div>
 
         <div>
           <h2 className="text-black text-lg font-bold p-2 flex items-center">
             Rumble Road
-            {mutation.isPending && (
+            {isAudioLoading && (
               <div className="ml-2">
                 <div className="loading loading-ring loading-xs text-gray-300" />
               </div>
@@ -211,7 +217,7 @@ const OtherTunes = () => {
         <div>
           <h2 className="text-black text-lg font-bold p-2 flex items-center">
             Ivorie
-            {mutation.isPending && (
+            {isAudioLoading && (
               <div className="ml-2">
                 <div className="loading loading-ring loading-xs text-gray-300" />
               </div>
@@ -238,6 +244,9 @@ const OtherTunes = () => {
             onPlay={() => setIsMusicPlaying(true)}
             onPause={() => setIsMusicPlaying(false)}
             onEnded={handleSongEnd}
+            onLoadStart={handleLoadStart}
+            onCanPlayThrough={handleCanPlayThrough}
+            onError={handleAudioError}
           >
             Your browser does not support the audio element.
           </audio>
