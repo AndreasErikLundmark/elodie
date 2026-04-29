@@ -17,7 +17,7 @@ export default function ScrollDownButton() {
   return (
     <button
       onClick={() => scrollFoldOut("down")}
-      className=" bg-transparent border-none text-gray-300 text-2xl p-2 rounded-full mt-20 hover:text-gray-600 transition duration-300 opacity-70"
+      className=" bg-transparent border-none text-gray-300 text-2xl p-2 rounded-full mt-20 hover:text-gray-900 transition duration-300 opacity-70"
     >
       <div className="flex flex-col gap-16">
         <RiScrollToBottomFill />

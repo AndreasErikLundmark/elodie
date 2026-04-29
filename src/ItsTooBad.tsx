@@ -100,12 +100,11 @@ export default function ItsTooBad() {
     }
   }, [audioSource]);
 
-  // Show spinner only if loading lasts > 2 seconds
   const handleLoadStart = () => {
     if (loadingTimeoutRef.current) clearTimeout(loadingTimeoutRef.current);
     loadingTimeoutRef.current = setTimeout(() => {
       setIsAudioLoading(true);
-    }, 2000); // 2-second delay
+    }, 200); // 2-second delay
   };
 
   const handleCanPlayThrough = () => {

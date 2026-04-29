@@ -50,7 +50,7 @@ const App = () => {
   const buttonList = originalButtonList.map((button, index) => (
     <li
       key={button.id}
-      className="m-1 text-gray-900 hover:text-white transition duration-300 text-[17px]"
+      className="m-1 text-gray-900 hover:text-red-500 transition duration-300 text-[17px]"
     >
       <button
         className={`radioButton ${
@@ -167,7 +167,7 @@ const App = () => {
       </div>
 
       {/* Audio Player */}
-      <footer className="bg-white w-full hidden">
+      <footer className="bg-white w-full ">
         <div className="audio-player hidden fixed bottom-0 left-0 right-0 p-4 bg-white shadow-lg">
           <audio
             ref={audioRef}

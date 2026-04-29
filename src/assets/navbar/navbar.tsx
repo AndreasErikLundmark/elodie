@@ -8,7 +8,7 @@ import { PiVinylRecord } from "react-icons/pi";
 import { HiOutlinePhotograph } from "react-icons/hi";
 import { LuInfo } from "react-icons/lu";
 import { NavLink } from "react-router-dom";
-import { RiFolderDownloadLine } from "react-icons/ri";
+// import { RiFolderDownloadLine } from "react-icons/ri";
 
 interface NavbarProps {
   isMusicPlaying: boolean;
@@ -24,7 +24,7 @@ export default function Navbar({
   const [isFoldoutOpen, setFoldoutOpen] = useState(false);
 
   return (
-    <div className="w-full bg-transparent text-black text-lg">
+    <div className="w-full bg-transparent text-white text-lg z-50">
       {/* Navbar div */}
       <div className="relative flex justify-between items-center py-4 px-8">
         {/* Play/Pause Button */}
@@ -33,7 +33,7 @@ export default function Navbar({
             onClick={onPlayPause}
             className={`text-xl ${
               audioSource === null
-                ? "text-gray-200 opacity-80 cursor-not-allowed"
+                ? "text-white opacity-80 cursor-not-allowed"
                 : ""
             }`}
             disabled={audioSource === null}
@@ -59,11 +59,11 @@ export default function Navbar({
             onToggle={() => setFoldoutOpen((prevState) => !prevState)}
             className="relative"
           >
-            <summary className="cursor-pointer text-3xl text-gray-200 list-none font-bold opacity-80">
+            <summary className="cursor-pointer text-2xl text-white list-none font-bold opacity-80">
               <span className="ml-2 ">
                 {/* Custom arrow */}
 
-                {isFoldoutOpen ? ".." : "..."}
+                {isFoldoutOpen ? ".." : "!..."}
               </span>
             </summary>
 
@@ -126,7 +126,7 @@ export default function Navbar({
                   <LuInfo />
                 </NavLink>
               </li>
-              <li className="m-2">
+              {/* <li className="m-2">
                 <a
                   href="https://sv.wikipedia.org/wiki/%C3%89lodie"
                   target="_blank"
@@ -134,7 +134,7 @@ export default function Navbar({
                 >
                   <RiFolderDownloadLine />
                 </a>
-              </li>
+              </li> */}
             </ul>
           </details>
         </div>
