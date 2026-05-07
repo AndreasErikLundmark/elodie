@@ -6,11 +6,11 @@ import { ButtonFold } from "./assets/buttons/buttonFold";
 import Navbar from "./assets/navbar/navbar";
 import Birds from "./assets/birds/birds";
 
-import song1 from "./assets/mp3/1 - élodie.mp3";
-import song2 from "./assets/mp3/2 - élodie.mp3";
-import song3 from "./assets/mp3/3 - élodie.mp3";
-import song4 from "./assets/mp3/4 - élodie.mp3";
-import song5 from "./assets/mp3/5 - élodie.mp3";
+import song1 from "./assets/mp3/At the end of the line/01 - Be my ghost.wav";
+import song2 from "./assets/mp3/At the end of the line/02 - At the end of the line.wav";
+import song3 from "./assets/mp3/At the end of the line/03 - Mandarine2.wav";
+import song4 from "./assets/mp3/At the end of the line/04 Make up killers.mp3";
+import song5 from "./assets/mp3/At the end of the line/05 - Overload.wav";
 
 const App = () => {
   const originalButtonList = [
@@ -64,13 +64,15 @@ const App = () => {
   ));
 
   const toggleAudio = () => {
-    if (audioRef.current) {
-      if (audioRef.current.paused) {
-        audioRef.current.play();
-      } else {
-        audioRef.current.pause();
-      }
-      setIsMusicPlaying((prevState) => !prevState);
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    if (audio.paused) {
+      audio.play().catch(() => {});
+      setIsMusicPlaying(true);
+    } else {
+      audio.pause();
+      setIsMusicPlaying(false);
     }
   };
 
@@ -83,11 +85,66 @@ const App = () => {
     }
   };
 
+  // 🔥 ONLY FIX THAT MATTERS (this is the entire solution)
+  // useEffect(() => {
+  //   const audio = audioRef.current;
+  //   if (!audio || !audioSource) return;
+
+  //   setIsAudioLoading(true);
+
+  //   audio.pause();
+  //   audio.src = audioSource;
+  //   audio.load();
+
+  //   const onCanPlay = () => {
+  //     audio.play().catch(() => {});
+  //     setIsMusicPlaying(true);
+  //     setIsAudioLoading(false);
+  //   };
+
+  //   audio.addEventListener("canplay", onCanPlay, { once: true });
+
+  //   return () => {
+  //     audio.removeEventListener("canplay", onCanPlay);
+  //   };
+  // }, [audioSource]);
+
   useEffect(() => {
-    if (audioSource && audioRef.current) {
-      audioRef.current.load();
-      audioRef.current.play().catch(() => {});
-    }
+    const audio = audioRef.current;
+    if (!audio || !audioSource) return;
+
+    let cancelled = false;
+
+    setIsAudioLoading(true);
+
+    audio.pause();
+    audio.src = audioSource;
+    audio.load();
+
+    const tryPlay = async () => {
+      if (cancelled) return;
+
+      try {
+        await audio.play();
+        setIsMusicPlaying(true);
+      } catch (err) {
+        // autoplay blocked or timing issue
+        setIsMusicPlaying(false);
+      } finally {
+        setIsAudioLoading(false);
+      }
+    };
+
+    const onCanPlay = () => {
+      tryPlay();
+    };
+
+    audio.addEventListener("canplay", onCanPlay);
+
+    return () => {
+      cancelled = true;
+      audio.removeEventListener("canplay", onCanPlay);
+    };
   }, [audioSource]);
 
   const handleLoadStart = () => {
@@ -127,7 +184,6 @@ const App = () => {
       onMouseEnter={() => setOpacity(0.3)}
       onMouseLeave={() => setOpacity(0)}
     >
-      {/* Mouse lighting effect */}
       <div
         className="pointer-events-none absolute inset-0 transition duration-300"
         style={{
@@ -136,7 +192,6 @@ const App = () => {
         }}
       />
 
-      {/* Navbar */}
       <div className="header flex justify-center items-center py-4">
         <Navbar
           isMusicPlaying={isMusicPlaying}
@@ -147,10 +202,10 @@ const App = () => {
 
       <Birds isPlaying={isMusicPlaying} />
 
-      {/* Album cover + loading spinner */}
       <div className="flex flex-col items-center h-full space-y-3 -mt-6">
         <div className="relative min-h-[290px] min-w-[290px] max-h-[290px] max-w-[290px] border-2 border-gray-800 p-4 mt-4 sm:mt-11 shadow-md ">
           <div className="h-full w-full bg-cover" style={coverAtTheEnd}></div>
+
           {isAudioLoading && (
             <div className="absolute inset-0 flex items-center justify-center bg-[#fef8f280] transition-opacity duration-300">
               <div className="loading loading-ring loading-lg text-black"></div>
@@ -160,30 +215,25 @@ const App = () => {
 
         <ButtonFold />
 
-        {/* Song List */}
         <div id="foldOut">
           <ul className="radioButtons">{buttonList}</ul>
         </div>
       </div>
 
-      {/* Audio Player */}
-      <footer className="bg-white w-full ">
+      <footer className="bg-white w-full">
         <div className="audio-player hidden fixed bottom-0 left-0 right-0 p-4 bg-white shadow-lg">
           <audio
             ref={audioRef}
             controls
-            preload="metadata"
             src={audioSource || undefined}
-            autoPlay={isMusicPlaying}
+            preload="auto"
             onPlay={() => setIsMusicPlaying(true)}
             onPause={() => setIsMusicPlaying(false)}
             onEnded={handleSongEnd}
             onLoadStart={handleLoadStart}
             onCanPlayThrough={handleCanPlayThrough}
             onError={handleAudioError}
-          >
-            Your browser does not support the audio element.
-          </audio>
+          />
         </div>
       </footer>
     </div>

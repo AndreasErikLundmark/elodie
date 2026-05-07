@@ -6,16 +6,16 @@ import { ButtonFold } from "./assets/buttons/buttonFold";
 import Navbar from "./assets/navbar/navbar";
 import ScrollDownButton from "./assets/buttons/scrollDownButton";
 
-import song1 from "./assets/mp3/It´s too bad you´re leaving/01.Jannowitzbrücke.mp3";
-import song2 from "./assets/mp3/It´s too bad you´re leaving/02.1641.mp3";
-import song3 from "./assets/mp3/It´s too bad you´re leaving/03.Yellow trail.mp3";
-import song4 from "./assets/mp3/It´s too bad you´re leaving/04.Esmeralda.mp3";
-import song5 from "./assets/mp3/It´s too bad you´re leaving/05.See you.mp3";
-import song6 from "./assets/mp3/It´s too bad you´re leaving/06.Five minutes.mp3";
-import song7 from "./assets/mp3/It´s too bad you´re leaving/07.Maps & Squares.mp3";
-import song8 from "./assets/mp3/It´s too bad you´re leaving/08.Mosquito.mp3";
-import song9 from "./assets/mp3/It´s too bad you´re leaving/09.Åka Bil Pt 1+ Pt 2.mp3";
-import song10 from "./assets/mp3/It´s too bad you´re leaving/10.Le Soleil Brille.mp3";
+import song1 from "./assets/mp3/Its too bad youre leaving/01.Jannowitzbrucke.mp3";
+import song2 from "./assets/mp3/Its too bad youre leaving/02.1641.mp3";
+import song3 from "./assets/mp3/Its too bad youre leaving/03.Yellow trail.mp3";
+import song4 from "./assets/mp3/Its too bad youre leaving/04.Esmeralda.mp3";
+import song5 from "./assets/mp3/Its too bad youre leaving/05.See you.mp3";
+import song6 from "./assets/mp3/Its too bad youre leaving/06.Five minutes.mp3";
+import song7 from "./assets/mp3/Its too bad youre leaving/07.Maps & Squares.mp3";
+import song8 from "./assets/mp3/Its too bad youre leaving/08.Mosquito.mp3";
+import song9 from "./assets/mp3/Its too bad youre leaving/09.Aka Bil Pt 1+ Pt 2.mp3";
+import song10 from "./assets/mp3/Its too bad youre leaving/10.Le Soleil Brille.mp3";
 
 export default function ItsTooBad() {
   const originalButtonList = [

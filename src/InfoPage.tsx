@@ -39,8 +39,8 @@ export default function InfoPage() {
           <li>Henrik Wiklund - Bas Guitar</li>
           <li>Simon Jonsson - Keyboards</li>
           <li>Evelina Hägglund - Vocals</li>
-          <li>Andreas Lundmark - Guitar</li>
           <li>Peder Zingmark - Drums</li>
+          <li>Andreas Lundmark - Guitar</li>
         </ul>
       </div>
     </div>
