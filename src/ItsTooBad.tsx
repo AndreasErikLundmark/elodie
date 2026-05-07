@@ -40,7 +40,11 @@ export default function ItsTooBad() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const loadingTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  // ⭐ TORCH FIX — minimal, safe, correct
   const divRef = useRef<HTMLDivElement>(null);
+  const torchRef = useRef<HTMLDivElement>(null);
+  const firstMoveRef = useRef(true);
+
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [opacity, setOpacity] = useState(0);
 
@@ -104,7 +108,7 @@ export default function ItsTooBad() {
     if (loadingTimeoutRef.current) clearTimeout(loadingTimeoutRef.current);
     loadingTimeoutRef.current = setTimeout(() => {
       setIsAudioLoading(true);
-    }, 200); // 2-second delay
+    }, 200);
   };
 
   const handleCanPlayThrough = () => {
@@ -129,20 +133,46 @@ export default function ItsTooBad() {
         backgroundPosition: "center",
       }}
       onMouseMove={(e) => {
-        if (!divRef.current) return;
         const div = divRef.current;
+        if (!div) return;
+
         const rect = div.getBoundingClientRect();
-        setPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        // ⭐ FIRST MOVE FIX
+        if (firstMoveRef.current) {
+          firstMoveRef.current = false;
+          setOpacity(0.3);
+        }
+
+        setPosition({ x, y });
       }}
-      onMouseEnter={() => setOpacity(0.3)}
-      onMouseLeave={() => setOpacity(0)}
+      onMouseEnter={(e) => {
+        const div = divRef.current;
+        if (!div) return;
+
+        const rect = div.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        setPosition({ x, y });
+        setOpacity(0.3);
+      }}
+      onMouseLeave={() => {
+        firstMoveRef.current = true;
+        setOpacity(0);
+      }}
     >
-      {/* Mouse gradient overlay */}
+      {/* ⭐ TORCH OVERLAY */}
       <div
+        ref={torchRef}
         className="pointer-events-none absolute inset-0 transition duration-300"
         style={{
           opacity,
-          background: `radial-gradient(400px circle at ${position.x}px ${position.y}px, rgba(255,255,255,0.8), rgba(255,255,255,0) 50%)`,
+          background: `radial-gradient(400px circle at ${position.x}px ${position.y}px,
+            rgba(255,255,255,0.8),
+            rgba(255,255,255,0) 50%)`,
         }}
       />
 
@@ -197,9 +227,7 @@ export default function ItsTooBad() {
             onLoadStart={handleLoadStart}
             onCanPlayThrough={handleCanPlayThrough}
             onError={handleAudioError}
-          >
-            Your browser does not support the audio element.
-          </audio>
+          />
         </div>
       </footer>
     </div>
