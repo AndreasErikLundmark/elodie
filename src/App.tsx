@@ -9,8 +9,8 @@ import Birds from "./assets/birds/birds";
 import song1 from "./assets/mp3/At the end of the line/01 - Be my ghost.mp3";
 import song2 from "./assets/mp3/At the end of the line/02 - At the end of the line.mp3";
 import song3 from "./assets/mp3/At the end of the line/03 - Mandarine2.mp3";
-import song4 from "./assets/mp3/At the end of the line/04 Make up killers.mp3";
-import song5 from "./assets/mp3/At the end of the line/05 - Overload.mp3";
+import song4 from "./assets/mp3/At the end of the line/04 - Make up killers.mp3";
+import song5 from "./assets/mp3/At the end of the line/05 Overload.mp3";
 
 const App = () => {
   const originalButtonList = [
@@ -21,6 +21,14 @@ const App = () => {
     { id: 5, title: "5. Overload", song: song5 },
   ];
 
+  // PRELOAD BACKGROUND IMAGE
+  useEffect(() => {
+    const img = new Image();
+    img.src = bgMain;
+  }, []);
+
+  const firstMoveRef = useRef(true);
+
   const [activeButton, setActiveButton] = useState<number | null>(null);
   const [isMusicPlaying, setIsMusicPlaying] = useState(false);
   const [audioSource, setAudioSource] = useState<string | null>(null);
@@ -29,10 +37,7 @@ const App = () => {
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const divRef = useRef<HTMLDivElement>(null);
-  const loadingTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [opacity, setOpacity] = useState(0);
+  const torchRef = useRef<HTMLDivElement>(null);
 
   const coverAtTheEnd = {
     backgroundImage: `url(${bg})`,
@@ -46,22 +51,6 @@ const App = () => {
     setIsMusicPlaying(true);
     setAudioSource(originalButtonList[index].song);
   };
-
-  const buttonList = originalButtonList.map((button, index) => (
-    <li
-      key={button.id}
-      className="m-1 text-gray-900 hover:text-red-500 transition duration-300 text-[17px]"
-    >
-      <button
-        className={`radioButton ${
-          songIndex === index ? "font-bold text-black" : ""
-        } transition duration-100`}
-        onClick={() => handleSelectSong(index)}
-      >
-        {button.title}
-      </button>
-    </li>
-  ));
 
   const toggleAudio = () => {
     const audio = audioRef.current;
@@ -85,30 +74,7 @@ const App = () => {
     }
   };
 
-  // 🔥 ONLY FIX THAT MATTERS (this is the entire solution)
-  // useEffect(() => {
-  //   const audio = audioRef.current;
-  //   if (!audio || !audioSource) return;
-
-  //   setIsAudioLoading(true);
-
-  //   audio.pause();
-  //   audio.src = audioSource;
-  //   audio.load();
-
-  //   const onCanPlay = () => {
-  //     audio.play().catch(() => {});
-  //     setIsMusicPlaying(true);
-  //     setIsAudioLoading(false);
-  //   };
-
-  //   audio.addEventListener("canplay", onCanPlay, { once: true });
-
-  //   return () => {
-  //     audio.removeEventListener("canplay", onCanPlay);
-  //   };
-  // }, [audioSource]);
-
+  // AUDIO LOADING
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio || !audioSource) return;
@@ -127,17 +93,14 @@ const App = () => {
       try {
         await audio.play();
         setIsMusicPlaying(true);
-      } catch (err) {
-        // autoplay blocked or timing issue
+      } catch {
         setIsMusicPlaying(false);
       } finally {
         setIsAudioLoading(false);
       }
     };
 
-    const onCanPlay = () => {
-      tryPlay();
-    };
+    const onCanPlay = () => tryPlay();
 
     audio.addEventListener("canplay", onCanPlay);
 
@@ -147,52 +110,91 @@ const App = () => {
     };
   }, [audioSource]);
 
-  const handleLoadStart = () => {
-    if (loadingTimeoutRef.current) clearTimeout(loadingTimeoutRef.current);
-    loadingTimeoutRef.current = setTimeout(() => {
-      setIsAudioLoading(true);
-    }, 2000);
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const container = divRef.current;
+    const torch = torchRef.current;
+    if (!container || !torch) return;
+
+    const rect = container.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    // If this is the first movement, simulate mouseenter
+    if (firstMoveRef.current) {
+      firstMoveRef.current = false;
+      torch.style.opacity = "0.3";
+    }
+
+    torch.style.background = `
+    radial-gradient(450px circle at ${x}px ${y}px,
+    rgba(255,255,255,0.85),
+    rgba(255,255,255,0) 55%)
+  `;
   };
 
-  const handleCanPlayThrough = () => {
-    if (loadingTimeoutRef.current) clearTimeout(loadingTimeoutRef.current);
-    setIsAudioLoading(false);
+  const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
+    const container = divRef.current;
+    const torch = torchRef.current;
+    if (!container || !torch) return;
+
+    const rect = container.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    torch.style.background = `
+      radial-gradient(450px circle at ${x}px ${y}px,
+      rgba(255,255,255,0.85),
+      rgba(255,255,255,0) 55%)
+    `;
+
+    torch.style.opacity = "0.3";
   };
 
-  const handleAudioError = () => {
-    if (loadingTimeoutRef.current) clearTimeout(loadingTimeoutRef.current);
-    setIsAudioLoading(false);
+  const handleMouseLeave = () => {
+    firstMoveRef.current = true; // reset
+    if (torchRef.current) torchRef.current.style.opacity = "0";
   };
+
+  const buttonList = originalButtonList.map((button, index) => (
+    <li
+      key={button.id}
+      className="m-1 text-gray-900 hover:text-red-500 transition duration-300 text-[17px]"
+    >
+      <button
+        className={`radioButton ${
+          songIndex === index ? "font-bold text-black" : ""
+        } transition duration-100`}
+        onClick={() => handleSelectSong(index)}
+      >
+        {button.title}
+      </button>
+    </li>
+  ));
 
   return (
     <div
-      id="mainDiv"
       ref={divRef}
-      className="w-full h-screen bg-[#f8f8f8] relative"
-      style={{
-        backgroundImage: `url(${bgMain})`,
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "center",
-      }}
-      onMouseMove={(e) => {
-        if (!divRef.current) return;
-        const div = divRef.current;
-        const rect = div.getBoundingClientRect();
-        setPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
-      }}
-      onMouseEnter={() => setOpacity(0.3)}
-      onMouseLeave={() => setOpacity(0)}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      className="w-full h-screen relative overflow-hidden"
     >
-      <div
-        className="pointer-events-none absolute inset-0 transition duration-300"
-        style={{
-          opacity,
-          background: `radial-gradient(400px circle at ${position.x}px ${position.y}px, rgba(255,255,255,0.8), rgba(255,255,255,0) 50%)`,
-        }}
+      {/* BACKGROUND IMAGE AS IMG (fixes 10s delay) */}
+      <img
+        src={bgMain}
+        className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+        alt=""
       />
 
-      <div className="header flex justify-center items-center py-4">
+      {/* TORCH LAYER */}
+      <div
+        ref={torchRef}
+        className="pointer-events-none absolute inset-0 transition-opacity duration-150"
+        style={{ opacity: 0 }}
+      />
+
+      {/* NAV */}
+      <div className="header flex justify-center items-center py-4 relative ">
         <Navbar
           isMusicPlaying={isMusicPlaying}
           onPlayPause={toggleAudio}
@@ -200,10 +202,11 @@ const App = () => {
         />
       </div>
 
-      <Birds isPlaying={isMusicPlaying} />
+      {/* <Birds isPlaying={isMusicPlaying} /> */}
 
-      <div className="flex flex-col items-center h-full space-y-3 -mt-6">
-        <div className="relative min-h-[290px] min-w-[290px] max-h-[290px] max-w-[290px] border-2 border-gray-800 p-4 mt-4 sm:mt-11 shadow-md ">
+      {/* MAIN */}
+      <div className="flex flex-col items-center h-full space-y-3 -mt-6 relative z-10">
+        <div className="relative min-h-[290px] min-w-[290px] max-h-[290px] max-w-[290px] border-2 border-gray-800 p-4 mt-4 sm:mt-11 shadow-md">
           <div className="h-full w-full bg-cover" style={coverAtTheEnd}></div>
 
           {isAudioLoading && (
@@ -220,6 +223,7 @@ const App = () => {
         </div>
       </div>
 
+      {/* AUDIO */}
       <footer className="bg-white w-full">
         <div className="audio-player hidden fixed bottom-0 left-0 right-0 p-4 bg-white shadow-lg">
           <audio
@@ -230,9 +234,6 @@ const App = () => {
             onPlay={() => setIsMusicPlaying(true)}
             onPause={() => setIsMusicPlaying(false)}
             onEnded={handleSongEnd}
-            onLoadStart={handleLoadStart}
-            onCanPlayThrough={handleCanPlayThrough}
-            onError={handleAudioError}
           />
         </div>
       </footer>
