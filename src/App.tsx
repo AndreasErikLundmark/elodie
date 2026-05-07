@@ -6,11 +6,11 @@ import { ButtonFold } from "./assets/buttons/buttonFold";
 import Navbar from "./assets/navbar/navbar";
 import Birds from "./assets/birds/birds";
 
-import song1 from "./assets/mp3/At the end of the line/01 - Be my ghost.wav";
-import song2 from "./assets/mp3/At the end of the line/02 - At the end of the line.wav";
-import song3 from "./assets/mp3/At the end of the line/03 - Mandarine2.wav";
+import song1 from "./assets/mp3/At the end of the line/01 - Be my ghost.mp3";
+import song2 from "./assets/mp3/At the end of the line/02 - At the end of the line.mp3";
+import song3 from "./assets/mp3/At the end of the line/03 - Mandarine2.mp3";
 import song4 from "./assets/mp3/At the end of the line/04 Make up killers.mp3";
-import song5 from "./assets/mp3/At the end of the line/05 - Overload.wav";
+import song5 from "./assets/mp3/At the end of the line/05 - Overload.mp3";
 
 const App = () => {
   const originalButtonList = [
