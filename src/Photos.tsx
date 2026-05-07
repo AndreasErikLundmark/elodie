@@ -79,6 +79,7 @@ export default function Photos() {
       <div className="header flex justify-center items-center py-4">
         <Navbar isMusicPlaying={false} onPlayPause={null} audioSource={null} />
       </div>
+
       <div
         ref={scrollRef}
         className="flex flex-col items-center overflow-y-auto h-screen"
@@ -87,32 +88,27 @@ export default function Photos() {
         {activeGallery === 1 && <Gallery />}
         {activeGallery === 2 && <Gallery2 />}
         {/* {activeGallery === 3 && <Gallery3 />} */}
-      </div>
-      {/* Content section that is scrollable */}
-      {/* <div className="flex flex-col items-center overflow-y-auto max-h-[480px] ">
-        <Gallery />
-        <Gallery2 />
-      </div> */}
-      <div className="fixed bottom-0 w-full justify-center items-center join gap-3 p-1 rounded-lg z-10 text-gray-100">
-        <button
-          className={`join-item btn ${activeGallery === 1 ? "btn-active" : ""}`}
-          onClick={() => {
-            setActiveGallery(1);
-            scrollToTop();
-          }}
-        >
-          1
-        </button>
-        <button
-          className={`join-item btn ${activeGallery === 2 ? "btn-active" : ""}`}
-          onClick={() => {
-            setActiveGallery(2);
-            scrollToTop();
-          }}
-        >
-          2
-        </button>
-        {/* <button
+
+        <div className="fixed mt-6 w-full justify-center items-center join gap-3 p-1 rounded-lg z-10 text-gray-100">
+          <button
+            className={`join-item btn ${activeGallery === 1 ? "btn-active" : ""}`}
+            onClick={() => {
+              setActiveGallery(1);
+              scrollToTop();
+            }}
+          >
+            1
+          </button>
+          <button
+            className={`join-item btn ${activeGallery === 2 ? "btn-active" : ""}`}
+            onClick={() => {
+              setActiveGallery(2);
+              scrollToTop();
+            }}
+          >
+            2
+          </button>
+          {/* <button
           className={`join-item btn ${activeGallery === 3 ? "btn-active" : ""}`}
           onClick={() => {
             setActiveGallery(3);
@@ -121,7 +117,13 @@ export default function Photos() {
         >
           3
         </button> */}
+        </div>
       </div>
+      {/* Content section that is scrollable */}
+      {/* <div className="flex flex-col items-center overflow-y-auto max-h-[480px] ">
+        <Gallery />
+        <Gallery2 />
+      </div> */}
 
       {/* Footer section */}
       <footer className="bg-white w-full">
