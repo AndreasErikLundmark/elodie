@@ -1,4 +1,4 @@
-import bgMain from "../src/assets/images/lakeGold.png";
+import bgMain from "../src/assets/images/lakeGold.webp";
 import Navbar from "./assets/navbar/navbar";
 
 export default function InfoPage() {
