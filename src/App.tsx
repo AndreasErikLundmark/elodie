@@ -1,10 +1,10 @@
 import { useState, useRef, useEffect } from "react";
 import "./App.css";
-import bg from "../src/assets/images/atendbg.png";
-import bgMain from "../src/assets/images/lake.png";
+import bg from "../src/assets/images/atendbg.webp";
+import bgMain from "../src/assets/images/lake.webp";
 import { ButtonFold } from "./assets/buttons/buttonFold";
 import Navbar from "./assets/navbar/navbar";
-import Birds from "./assets/birds/birds";
+// import Birds from "./assets/birds/birds";
 
 import song1 from "./assets/mp3/At the end of the line/01 - Be my ghost.mp3";
 import song2 from "./assets/mp3/At the end of the line/02 - At the end of the line.mp3";

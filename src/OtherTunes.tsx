@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import "./App.css";
-import bgMain from "../src/assets/images/lakedarkblue.png";
+import bgMain from "../src/assets/images/lakedarkblue.webp";
 import Navbar from "./assets/navbar/navbar";
 
 // Ivorie
@@ -53,7 +53,6 @@ const OtherTunes = () => {
   const divRef = useRef<HTMLDivElement>(null);
   const loadingTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // ⭐ TORCH FIX — ONLY CHANGE
   const torchRef = useRef<HTMLDivElement>(null);
   const firstMoveRef = useRef(true);
 
@@ -186,7 +185,7 @@ const OtherTunes = () => {
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
 
-        // ⭐ FIRST MOVE FIX
+        //  mouse move FiX..
         if (firstMoveRef.current) {
           firstMoveRef.current = false;
           setOpacity(0.3);
@@ -210,7 +209,6 @@ const OtherTunes = () => {
         setOpacity(0);
       }}
     >
-      {/* ⭐ TORCH OVERLAY */}
       <div
         ref={torchRef}
         className="pointer-events-none absolute inset-0 transition duration-300 "

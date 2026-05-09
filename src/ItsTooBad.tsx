@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import "./App.css";
 import bg from "../src/assets/images/itsTooBadHighRes.jpg";
-import bgMain from "../src/assets/images/lakepink.png";
+import bgMain from "../src/assets/images/lakepink.webp";
 import { ButtonFold } from "./assets/buttons/buttonFold";
 import Navbar from "./assets/navbar/navbar";
 import ScrollDownButton from "./assets/buttons/scrollDownButton";

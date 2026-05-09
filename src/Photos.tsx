@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import "./App.css";
 // import bg from "../src/assets/images/its too bad youre leaving.png";
-import bgMain from "../src/assets/images/lakedark.png";
+import bgMain from "../src/assets/images/lakedarkblue.webp";
 import Navbar from "./assets/navbar/navbar";
 import Gallery from "./assets/gallery/Gallery";
 import Gallery2 from "./assets/gallery/Gallery2";
