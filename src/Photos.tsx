@@ -1,11 +1,9 @@
 import { useState, useRef, useEffect } from "react";
 import "./App.css";
-// import bg from "../src/assets/images/its too bad youre leaving.png";
 import bgMain from "../src/assets/images/lakedarkblue.webp";
 import Navbar from "./assets/navbar/navbar";
 import Gallery from "./assets/gallery/Gallery";
 import Gallery2 from "./assets/gallery/Gallery2";
-// import Gallery3 from "./assets/gallery/Gallery3";
 
 export default function Photos() {
   const [isMusicPlaying, setIsMusicPlaying] = useState(false);
@@ -18,6 +16,20 @@ export default function Photos() {
   const [activeGallery, setActiveGallery] = useState(1);
 
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  // ⭐ NEW: page loading state
+  const [isAppLoading, setIsAppLoading] = useState(true);
+
+  // ⭐ NEW: preload background
+  useEffect(() => {
+    const img = new Image();
+    img.src = bgMain;
+
+    const done = () => setIsAppLoading(false);
+
+    img.onload = done;
+    img.onerror = done;
+  }, []);
 
   const scrollToTop = () => {
     if (scrollRef.current) {
@@ -37,9 +49,7 @@ export default function Photos() {
     }
   };
 
-  const handleSongEnd = () => {
-    // handle song end logic if necessary
-  };
+  const handleSongEnd = () => {};
 
   useEffect(() => {
     if (audioSource && audioRef.current) {
@@ -49,98 +59,107 @@ export default function Photos() {
   }, [audioSource]);
 
   return (
-    <div
-      id="mainDiv"
-      ref={divRef}
-      className="w-full min-h-screen bg-[#f8f8f8] relative"
-      style={{
-        backgroundImage: `url(${bgMain})`,
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "center",
-      }}
-      onMouseMove={(e) => {
-        if (!divRef.current) return;
-        const div = divRef.current;
-        const rect = div.getBoundingClientRect();
-        setPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
-      }}
-      onMouseEnter={() => setOpacity(0.3)}
-      onMouseLeave={() => setOpacity(0)}
-    >
+    <>
+      {/* ⭐ SOFT LOADING OVERLAY */}
       <div
-        className="pointer-events-none absolute inset-0 transition duration-300"
-        style={{
-          opacity,
-          background: `radial-gradient(400px circle at ${position.x}px ${position.y}px, rgba(255,255,255,0.8), rgba(255,255,255,0) 50%)`,
-        }}
-      />
-
-      <div className="header flex justify-center items-center py-4">
-        <Navbar isMusicPlaying={false} onPlayPause={null} audioSource={null} />
-      </div>
-
-      <div
-        ref={scrollRef}
-        className="flex flex-col items-center overflow-y-auto h-screen"
+        className={`fixed inset-0 z-50 flex items-center justify-center bg-black transition-opacity duration-700 ${
+          isAppLoading ? "opacity-100" : "opacity-0 pointer-events-none"
+        }`}
       >
-        {/* <div className="flex flex-col items-center overflow-y-auto max-h-[480px]"> */}
-        {activeGallery === 1 && <Gallery />}
-        {activeGallery === 2 && <Gallery2 />}
-        {/* {activeGallery === 3 && <Gallery3 />} */}
-
-        <div className="fixed mt-6 w-full justify-center items-center join gap-3 p-1 rounded-lg z-10 text-gray-100">
-          <button
-            className={`join-item btn ${activeGallery === 1 ? "btn-active" : ""}`}
-            onClick={() => {
-              setActiveGallery(1);
-              scrollToTop();
-            }}
-          >
-            1
-          </button>
-          <button
-            className={`join-item btn ${activeGallery === 2 ? "btn-active" : ""}`}
-            onClick={() => {
-              setActiveGallery(2);
-              scrollToTop();
-            }}
-          >
-            2
-          </button>
-          {/* <button
-          className={`join-item btn ${activeGallery === 3 ? "btn-active" : ""}`}
-          onClick={() => {
-            setActiveGallery(3);
-            scrollToTop();
-          }}
-        >
-          3
-        </button> */}
-        </div>
+        <div className="loading loading-ring loading-lg text-white"></div>
       </div>
-      {/* Content section that is scrollable */}
-      {/* <div className="flex flex-col items-center overflow-y-auto max-h-[480px] ">
-        <Gallery />
-        <Gallery2 />
-      </div> */}
 
-      {/* Footer section */}
-      <footer className="bg-white w-full">
-        <div className="audio-player hidden fixed bottom-0 left-0 right-0 p-4 bg-white shadow-lg">
-          <audio
-            ref={audioRef}
-            controls
-            src={audioSource || undefined}
-            autoPlay={isMusicPlaying}
-            onPlay={() => setIsMusicPlaying(true)}
-            onPause={() => setIsMusicPlaying(false)}
-            onEnded={handleSongEnd}
-          >
-            Your browser does not support the audio element.
-          </audio>
+      <div
+        id="mainDiv"
+        ref={divRef}
+        className="w-full min-h-screen bg-[#f8f8f8] relative"
+        style={{
+          backgroundImage: `url(${bgMain})`,
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center",
+        }}
+        onMouseMove={(e) => {
+          if (!divRef.current) return;
+          const rect = divRef.current.getBoundingClientRect();
+          setPosition({
+            x: e.clientX - rect.left,
+            y: e.clientY - rect.top,
+          });
+        }}
+        onMouseEnter={() => setOpacity(0.3)}
+        onMouseLeave={() => setOpacity(0)}
+      >
+        {/* TORCH */}
+        <div
+          className="pointer-events-none absolute inset-0 transition duration-300"
+          style={{
+            opacity,
+            background: `radial-gradient(400px circle at ${position.x}px ${position.y}px,
+              rgba(255,255,255,0.8),
+              rgba(255,255,255,0) 50%)`,
+          }}
+        />
+
+        {/* NAV */}
+        <div className="header flex justify-center items-center py-4">
+          <Navbar
+            isMusicPlaying={false}
+            onPlayPause={null}
+            audioSource={null}
+          />
         </div>
-      </footer>
-    </div>
+
+        {/* CONTENT */}
+        <div
+          ref={scrollRef}
+          className="flex flex-col items-center overflow-y-auto h-screen"
+        >
+          {activeGallery === 1 && <Gallery />}
+          {activeGallery === 2 && <Gallery2 />}
+
+          <div className="fixed mt-6 w-full justify-center items-center join gap-3 p-1 rounded-lg z-10 text-gray-100">
+            <button
+              className={`join-item btn ${
+                activeGallery === 1 ? "btn-active" : ""
+              }`}
+              onClick={() => {
+                setActiveGallery(1);
+                scrollToTop();
+              }}
+            >
+              1
+            </button>
+
+            <button
+              className={`join-item btn ${
+                activeGallery === 2 ? "btn-active" : ""
+              }`}
+              onClick={() => {
+                setActiveGallery(2);
+                scrollToTop();
+              }}
+            >
+              2
+            </button>
+          </div>
+        </div>
+
+        {/* AUDIO */}
+        <footer className="bg-white w-full">
+          <div className="audio-player hidden fixed bottom-0 left-0 right-0 p-4 bg-white shadow-lg">
+            <audio
+              ref={audioRef}
+              controls
+              src={audioSource || undefined}
+              autoPlay={isMusicPlaying}
+              onPlay={() => setIsMusicPlaying(true)}
+              onPause={() => setIsMusicPlaying(false)}
+              onEnded={handleSongEnd}
+            />
+          </div>
+        </footer>
+      </div>
+    </>
   );
 }

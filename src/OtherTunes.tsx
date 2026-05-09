@@ -49,8 +49,10 @@ const OtherTunes = () => {
   const [songIndex, setSongIndex] = useState<number>(-1);
   const [isAudioLoading, setIsAudioLoading] = useState(false);
 
+  // ⭐ NEW: page loading state
+  const [isAppLoading, setIsAppLoading] = useState(true);
+
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const divRef = useRef<HTMLDivElement>(null);
   const loadingTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const torchRef = useRef<HTMLDivElement>(null);
@@ -58,6 +60,17 @@ const OtherTunes = () => {
 
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [opacity, setOpacity] = useState(0);
+
+  // ⭐ NEW: preload background
+  useEffect(() => {
+    const img = new Image();
+    img.src = bgMain;
+
+    const done = () => setIsAppLoading(false);
+
+    img.onload = done;
+    img.onerror = done;
+  }, []);
 
   const buttonList = originalButtonList.map((button) => (
     <li
@@ -167,119 +180,128 @@ const OtherTunes = () => {
   };
 
   return (
-    <div
-      id="mainDiv"
-      ref={divRef}
-      className="w-full h-screen bg-[#f8f8f8] relative "
-      style={{
-        backgroundImage: `url(${bgMain})`,
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "center",
-      }}
-      onMouseMove={(e) => {
-        const div = divRef.current;
-        if (!div) return;
-
-        const rect = div.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-
-        //  mouse move FiX..
-        if (firstMoveRef.current) {
-          firstMoveRef.current = false;
-          setOpacity(0.3);
-        }
-
-        setPosition({ x, y });
-      }}
-      onMouseEnter={(e) => {
-        const div = divRef.current;
-        if (!div) return;
-
-        const rect = div.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-
-        setPosition({ x, y });
-        setOpacity(0.3);
-      }}
-      onMouseLeave={() => {
-        firstMoveRef.current = true;
-        setOpacity(0);
-      }}
-    >
+    <>
+      {/* ⭐ SOFT PAGE LOADER */}
       <div
-        ref={torchRef}
-        className="pointer-events-none absolute inset-0 transition duration-300 "
+        className={`fixed inset-0 z-50 flex items-center justify-center bg-black transition-opacity duration-700 ${
+          isAppLoading ? "opacity-100" : "opacity-0 pointer-events-none"
+        }`}
+      >
+        <div className="loading loading-ring loading-lg text-white"></div>
+      </div>
+
+      <div
+        id="mainDiv"
+        className="w-full h-screen bg-[#f8f8f8] relative "
         style={{
-          opacity,
-          background: `radial-gradient(400px circle at ${position.x}px ${position.y}px,
-            rgba(255,255,255,0.8),
-            rgba(255,255,255,0) 50%)`,
+          backgroundImage: `url(${bgMain})`,
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center",
         }}
-      />
+        onMouseMove={(e) => {
+          const rect = (
+            e.currentTarget as HTMLDivElement
+          ).getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
 
-      <div className="header flex justify-center items-center py-4">
-        <Navbar
-          isMusicPlaying={isMusicPlaying}
-          onPlayPause={toggleAudio}
-          audioSource={audioSource}
+          if (firstMoveRef.current) {
+            firstMoveRef.current = false;
+            setOpacity(0.3);
+          }
+
+          setPosition({ x, y });
+        }}
+        onMouseEnter={(e) => {
+          const rect = (
+            e.currentTarget as HTMLDivElement
+          ).getBoundingClientRect();
+          setPosition({
+            x: e.clientX - rect.left,
+            y: e.clientY - rect.top,
+          });
+          setOpacity(0.3);
+        }}
+        onMouseLeave={() => {
+          firstMoveRef.current = true;
+          setOpacity(0);
+        }}
+      >
+        {/* TORCH */}
+        <div
+          ref={torchRef}
+          className="pointer-events-none absolute inset-0 transition duration-300 "
+          style={{
+            opacity,
+            background: `radial-gradient(400px circle at ${position.x}px ${position.y}px,
+              rgba(255,255,255,0.8),
+              rgba(255,255,255,0) 50%)`,
+          }}
         />
-      </div>
 
-      <div className="flex flex-col items-center h-full space-y-3 -mt-6 z-10">
-        <div className="flex flex-row gap-6"></div>
-
-        <div>
-          <h2 className="text-black text-lg font-bold p-2 flex items-center">
-            Rumble Road
-            {isAudioLoading && (
-              <div className="ml-2">
-                <div className="loading loading-ring loading-xs text-gray-300" />
-              </div>
-            )}
-          </h2>
-          <ul className="radioButtons">{buttonList2}</ul>
-        </div>
-
-        <div>
-          <h2 className="text-black text-lg font-bold p-2 flex items-center">
-            Ivorie
-            {isAudioLoading && (
-              <div className="ml-2">
-                <div className="loading loading-ring loading-xs text-gray-300" />
-              </div>
-            )}
-          </h2>
-          <ul className="radioButtons">{buttonList}</ul>
-        </div>
-
-        <div>
-          <h2 className="text-black text-lg font-bold p-2 flex items-center">
-            Postlude
-          </h2>
-          <ul className="radioButtons">{buttonList3}</ul>
-        </div>
-      </div>
-
-      <footer className="bg-white w-full hidden">
-        <div className="audio-player hidden fixed bottom-0 left-0 right-0 p-4 bg-white shadow-lg">
-          <audio
-            ref={audioRef}
-            controls
-            src={audioSource || undefined}
-            autoPlay={isMusicPlaying}
-            onPlay={() => setIsMusicPlaying(true)}
-            onPause={() => setIsMusicPlaying(false)}
-            onEnded={handleSongEnd}
-            onLoadStart={handleLoadStart}
-            onCanPlayThrough={handleCanPlayThrough}
-            onError={handleAudioError}
+        {/* NAV */}
+        <div className="header flex justify-center items-center py-4">
+          <Navbar
+            isMusicPlaying={isMusicPlaying}
+            onPlayPause={toggleAudio}
+            audioSource={audioSource}
           />
         </div>
-      </footer>
-    </div>
+
+        {/* CONTENT */}
+        <div className="flex flex-col items-center h-full space-y-3 -mt-6 z-10">
+          <div>
+            <h2 className="text-black text-lg font-bold p-2 flex items-center">
+              Rumble Road
+              {isAudioLoading && (
+                <div className="ml-2">
+                  <div className="loading loading-ring loading-xs text-gray-300" />
+                </div>
+              )}
+            </h2>
+            <ul className="radioButtons">{buttonList2}</ul>
+          </div>
+
+          <div>
+            <h2 className="text-black text-lg font-bold p-2 flex items-center">
+              Ivorie
+              {isAudioLoading && (
+                <div className="ml-2">
+                  <div className="loading loading-ring loading-xs text-gray-300" />
+                </div>
+              )}
+            </h2>
+            <ul className="radioButtons">{buttonList}</ul>
+          </div>
+
+          <div>
+            <h2 className="text-black text-lg font-bold p-2 flex items-center">
+              Postlude
+            </h2>
+            <ul className="radioButtons">{buttonList3}</ul>
+          </div>
+        </div>
+
+        {/* AUDIO */}
+        <footer className="bg-white w-full hidden">
+          <div className="audio-player hidden fixed bottom-0 left-0 right-0 p-4 bg-white shadow-lg">
+            <audio
+              ref={audioRef}
+              controls
+              src={audioSource || undefined}
+              autoPlay={isMusicPlaying}
+              onPlay={() => setIsMusicPlaying(true)}
+              onPause={() => setIsMusicPlaying(false)}
+              onEnded={handleSongEnd}
+              onLoadStart={handleLoadStart}
+              onCanPlayThrough={handleCanPlayThrough}
+              onError={handleAudioError}
+            />
+          </div>
+        </footer>
+      </div>
+    </>
   );
 };
 

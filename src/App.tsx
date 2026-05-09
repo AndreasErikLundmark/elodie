@@ -4,7 +4,6 @@ import bg from "../src/assets/images/atendbg.webp";
 import bgMain from "../src/assets/images/lake.webp";
 import { ButtonFold } from "./assets/buttons/buttonFold";
 import Navbar from "./assets/navbar/navbar";
-// import Birds from "./assets/birds/birds";
 
 import song1 from "./assets/mp3/At the end of the line/01 - Be my ghost.mp3";
 import song2 from "./assets/mp3/At the end of the line/02 - At the end of the line.mp3";
@@ -21,29 +20,39 @@ const App = () => {
     { id: 5, title: "5. Overload", song: song5 },
   ];
 
-  // PRELOAD BACKGROUND IMAGE
-  useEffect(() => {
-    const img = new Image();
-    img.src = bgMain;
-  }, []);
-
-  const firstMoveRef = useRef(true);
-
   const [activeButton, setActiveButton] = useState<number | null>(null);
   const [isMusicPlaying, setIsMusicPlaying] = useState(false);
   const [audioSource, setAudioSource] = useState<string | null>(null);
   const [songIndex, setSongIndex] = useState<number>(-1);
   const [isAudioLoading, setIsAudioLoading] = useState(false);
 
+  // ✅ GLOBAL PAGE LOADING STATE
+  const [isAppLoading, setIsAppLoading] = useState(true);
+
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const divRef = useRef<HTMLDivElement>(null);
   const torchRef = useRef<HTMLDivElement>(null);
+
+  const firstMoveRef = useRef(true);
 
   const coverAtTheEnd = {
     backgroundImage: `url(${bg})`,
     backgroundPosition: "center",
     backgroundSize: "cover",
   };
+
+  // ✅ PRELOAD BACKGROUND + REMOVE OVERLAY WHEN READY
+  useEffect(() => {
+    const img = new Image();
+    img.src = bgMain;
+
+    const handleLoad = () => {
+      setIsAppLoading(false);
+    };
+
+    img.onload = handleLoad;
+    img.onerror = handleLoad; // fail-safe
+  }, []);
 
   const handleSelectSong = (index: number) => {
     setActiveButton(originalButtonList[index].id);
@@ -119,17 +128,16 @@ const App = () => {
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
 
-    // If this is the first movement, simulate mouseenter
     if (firstMoveRef.current) {
       firstMoveRef.current = false;
       torch.style.opacity = "0.3";
     }
 
     torch.style.background = `
-    radial-gradient(450px circle at ${x}px ${y}px,
-    rgba(255,255,255,0.85),
-    rgba(255,255,255,0) 55%)
-  `;
+      radial-gradient(450px circle at ${x}px ${y}px,
+      rgba(255,255,255,0.85),
+      rgba(255,255,255,0) 55%)
+    `;
   };
 
   const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -151,7 +159,7 @@ const App = () => {
   };
 
   const handleMouseLeave = () => {
-    firstMoveRef.current = true; // reset
+    firstMoveRef.current = true;
     if (torchRef.current) torchRef.current.style.opacity = "0";
   };
 
@@ -172,72 +180,81 @@ const App = () => {
   ));
 
   return (
-    <div
-      ref={divRef}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      className="w-full h-screen relative overflow-hidden"
-    >
-      {/* BACKGROUND IMAGE AS IMG (fixes 10s delay) */}
-      <img
-        src={bgMain}
-        className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-        alt=""
-      />
-
-      {/* TORCH LAYER */}
+    <>
+      {/* ✅ SOFT LOADING OVERLAY */}
       <div
-        ref={torchRef}
-        className="pointer-events-none absolute inset-0 transition-opacity duration-150"
-        style={{ opacity: 0 }}
-      />
+        className={`fixed inset-0 z-50 flex items-center justify-center bg-black transition-opacity duration-700 ${
+          isAppLoading ? "opacity-100" : "opacity-0 pointer-events-none"
+        }`}
+      >
+        <div className="loading loading-ring loading-lg text-white"></div>
+      </div>
 
-      {/* NAV */}
-      <div className="header flex justify-center items-center py-4 relative ">
-        <Navbar
-          isMusicPlaying={isMusicPlaying}
-          onPlayPause={toggleAudio}
-          audioSource={audioSource}
+      <div
+        ref={divRef}
+        onMouseMove={handleMouseMove}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        className="w-full h-screen relative overflow-hidden"
+      >
+        {/* BACKGROUND */}
+        <img
+          src={bgMain}
+          className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+          alt=""
         />
-      </div>
 
-      {/* <Birds isPlaying={isMusicPlaying} /> */}
+        {/* TORCH */}
+        <div
+          ref={torchRef}
+          className="pointer-events-none absolute inset-0 transition-opacity duration-150"
+          style={{ opacity: 0 }}
+        />
 
-      {/* MAIN */}
-      <div className="flex flex-col items-center h-full space-y-3 -mt-6 relative z-10">
-        <div className="relative min-h-[290px] min-w-[290px] max-h-[290px] max-w-[290px] border-2 border-gray-800 p-4 mt-4 sm:mt-11 shadow-md">
-          <div className="h-full w-full bg-cover" style={coverAtTheEnd}></div>
-
-          {isAudioLoading && (
-            <div className="absolute inset-0 flex items-center justify-center bg-[#fef8f280] transition-opacity duration-300">
-              <div className="loading loading-ring loading-lg text-black"></div>
-            </div>
-          )}
-        </div>
-
-        <ButtonFold />
-
-        <div id="foldOut">
-          <ul className="radioButtons">{buttonList}</ul>
-        </div>
-      </div>
-
-      {/* AUDIO */}
-      <footer className="bg-white w-full">
-        <div className="audio-player hidden fixed bottom-0 left-0 right-0 p-4 bg-white shadow-lg">
-          <audio
-            ref={audioRef}
-            controls
-            src={audioSource || undefined}
-            preload="auto"
-            onPlay={() => setIsMusicPlaying(true)}
-            onPause={() => setIsMusicPlaying(false)}
-            onEnded={handleSongEnd}
+        {/* NAV */}
+        <div className="header flex justify-center items-center py-4 relative ">
+          <Navbar
+            isMusicPlaying={isMusicPlaying}
+            onPlayPause={toggleAudio}
+            audioSource={audioSource}
           />
         </div>
-      </footer>
-    </div>
+
+        {/* MAIN */}
+        <div className="flex flex-col items-center h-full space-y-3 -mt-6 relative z-10">
+          <div className="relative min-h-[290px] min-w-[290px] max-h-[290px] max-w-[290px] border-2 border-gray-800 p-4 mt-4 sm:mt-11 shadow-md">
+            <div className="h-full w-full bg-cover" style={coverAtTheEnd}></div>
+
+            {isAudioLoading && (
+              <div className="absolute inset-0 flex items-center justify-center bg-[#fef8f280]">
+                <div className="loading loading-ring loading-lg text-black"></div>
+              </div>
+            )}
+          </div>
+
+          <ButtonFold />
+
+          <div id="foldOut">
+            <ul className="radioButtons">{buttonList}</ul>
+          </div>
+        </div>
+
+        {/* AUDIO */}
+        <footer className="bg-white w-full">
+          <div className="audio-player hidden fixed bottom-0 left-0 right-0 p-4 bg-white shadow-lg">
+            <audio
+              ref={audioRef}
+              controls
+              src={audioSource || undefined}
+              preload="auto"
+              onPlay={() => setIsMusicPlaying(true)}
+              onPause={() => setIsMusicPlaying(false)}
+              onEnded={handleSongEnd}
+            />
+          </div>
+        </footer>
+      </div>
+    </>
   );
 };
 
