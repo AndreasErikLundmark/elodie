@@ -61,14 +61,17 @@ body {
 }
 
 #foldOut {
-  /* position: absolute; */
   display: flex;
-  /* flex-direction: row; */
   flex-direction: column;
   align-items: center;
-  /* justify-content: center; */
   opacity: 0;
-  margin: 0px;
+  pointer-events: none; /* 👈 IMPORTANT */
+  transition: opacity 0.3s ease;
+}
+
+#foldOut.fade-in {
+  opacity: 1;
+  pointer-events: auto; /* 👈 re-enable when visible */
 }
 
 @keyframes fadeIn {

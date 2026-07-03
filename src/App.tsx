@@ -26,13 +26,13 @@ const App = () => {
   const [songIndex, setSongIndex] = useState<number>(-1);
   const [isAudioLoading, setIsAudioLoading] = useState(false);
 
-  // ✅ GLOBAL PAGE LOADING STATE
   const [isAppLoading, setIsAppLoading] = useState(true);
+
+  const [isFoldOpen, setIsFoldOpen] = useState(false);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const divRef = useRef<HTMLDivElement>(null);
   const torchRef = useRef<HTMLDivElement>(null);
-
   const firstMoveRef = useRef(true);
 
   const coverAtTheEnd = {
@@ -41,18 +41,29 @@ const App = () => {
     backgroundSize: "cover",
   };
 
-  // ✅ PRELOAD BACKGROUND + REMOVE OVERLAY WHEN READY
+  // preload bg
   useEffect(() => {
     const img = new Image();
     img.src = bgMain;
 
-    const handleLoad = () => {
-      setIsAppLoading(false);
-    };
+    const handleLoad = () => setIsAppLoading(false);
 
     img.onload = handleLoad;
-    img.onerror = handleLoad; // fail-safe
+    img.onerror = handleLoad;
   }, []);
+
+  const toggleFold = () => {
+    const element = document.getElementById("foldOut");
+    if (!element) return;
+
+    if (element.classList.contains("fade-in")) {
+      element.classList.remove("fade-in");
+      setIsFoldOpen(false);
+    } else {
+      element.classList.add("fade-in");
+      setIsFoldOpen(true);
+    }
+  };
 
   const handleSelectSong = (index: number) => {
     setActiveButton(originalButtonList[index].id);
@@ -83,7 +94,7 @@ const App = () => {
     }
   };
 
-  // AUDIO LOADING
+  // AUDIO LOAD
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio || !audioSource) return;
@@ -119,6 +130,7 @@ const App = () => {
     };
   }, [audioSource]);
 
+  // torch
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const container = divRef.current;
     const torch = torchRef.current;
@@ -149,12 +161,6 @@ const App = () => {
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
 
-    torch.style.background = `
-      radial-gradient(450px circle at ${x}px ${y}px,
-      rgba(255,255,255,0.85),
-      rgba(255,255,255,0) 55%)
-    `;
-
     torch.style.opacity = "0.3";
   };
 
@@ -181,7 +187,7 @@ const App = () => {
 
   return (
     <>
-      {/* ✅ SOFT LOADING OVERLAY */}
+      {/* LOADING */}
       <div
         className={`fixed inset-0 z-50 flex items-center justify-center bg-black transition-opacity duration-700 ${
           isAppLoading ? "opacity-100" : "opacity-0 pointer-events-none"
@@ -197,22 +203,19 @@ const App = () => {
         onMouseLeave={handleMouseLeave}
         className="w-full h-screen relative overflow-hidden"
       >
-        {/* BACKGROUND */}
         <img
           src={bgMain}
           className="absolute inset-0 w-full h-full object-cover pointer-events-none"
           alt=""
         />
 
-        {/* TORCH */}
         <div
           ref={torchRef}
           className="pointer-events-none absolute inset-0 transition-opacity duration-150"
           style={{ opacity: 0 }}
         />
 
-        {/* NAV */}
-        <div className="header flex justify-center items-center py-4 relative ">
+        <div className="header flex justify-center items-center py-4 relative">
           <Navbar
             isMusicPlaying={isMusicPlaying}
             onPlayPause={toggleAudio}
@@ -220,9 +223,11 @@ const App = () => {
           />
         </div>
 
-        {/* MAIN */}
         <div className="flex flex-col items-center h-full space-y-3 -mt-6 relative z-10">
-          <div className="relative min-h-[290px] min-w-[290px] max-h-[290px] max-w-[290px] border-2 border-gray-800 p-4 mt-4 sm:mt-11 shadow-md">
+          <div
+            onClick={toggleFold}
+            className="relative min-h-[290px] min-w-[290px] max-h-[290px] max-w-[290px] border-2 border-gray-800 p-4 mt-4 sm:mt-11 shadow-md cursor-pointer"
+          >
             <div className="h-full w-full bg-cover" style={coverAtTheEnd}></div>
 
             {isAudioLoading && (
@@ -232,8 +237,10 @@ const App = () => {
             )}
           </div>
 
-          <ButtonFold />
+          {/* BUTTON */}
+          <ButtonFold isOpen={isFoldOpen} onClick={toggleFold} />
 
+          {/* FOLD CONTENT */}
           <div id="foldOut">
             <ul className="radioButtons">{buttonList}</ul>
           </div>
