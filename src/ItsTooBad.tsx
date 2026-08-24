@@ -37,18 +37,15 @@ export default function ItsTooBad() {
   const [songIndex, setSongIndex] = useState<number>(-1);
   const [isAudioLoading, setIsAudioLoading] = useState(false);
 
-  // ⭐ NEW: page loading state
   const [isAppLoading, setIsAppLoading] = useState(true);
 
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-  const loadingTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // ⭐ SAME AS REFERENCE
+  const [isFoldOpen, setIsFoldOpen] = useState(false);
 
+  const audioRef = useRef<HTMLAudioElement | null>(null);
   const divRef = useRef<HTMLDivElement>(null);
   const torchRef = useRef<HTMLDivElement>(null);
   const firstMoveRef = useRef(true);
-
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [opacity, setOpacity] = useState(0);
 
   const coverAttheEnd = {
     backgroundImage: `url(${bg})`,
@@ -56,22 +53,123 @@ export default function ItsTooBad() {
     backgroundSize: "cover",
   };
 
-  // ⭐ NEW: preload main background
+  // ⭐ preload bg
   useEffect(() => {
     const img = new Image();
     img.src = bgMain;
-
     const done = () => setIsAppLoading(false);
-
     img.onload = done;
     img.onerror = done;
   }, []);
+
+  // ⭐ SAME FOLDOUT LOGIC AS REFERENCE
+  const toggleFold = () => {
+    const element = document.getElementById("foldOut");
+    if (!element) return;
+
+    if (element.classList.contains("fade-in")) {
+      element.classList.remove("fade-in");
+      setIsFoldOpen(false);
+    } else {
+      element.classList.add("fade-in");
+      setIsFoldOpen(true);
+    }
+  };
 
   const handleSelectSong = (index: number) => {
     setActiveButton(originalButtonList[index].id);
     setSongIndex(index);
     setIsMusicPlaying(true);
     setAudioSource(originalButtonList[index].song);
+  };
+
+  const toggleAudio = () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    if (audio.paused) {
+      audio.play().catch(() => {});
+      setIsMusicPlaying(true);
+    } else {
+      audio.pause();
+      setIsMusicPlaying(false);
+    }
+  };
+
+  const handleSongEnd = () => {
+    const nextSongIndex = (songIndex + 1) % originalButtonList.length;
+    const nextSong = originalButtonList[nextSongIndex]?.song;
+    if (nextSong) {
+      setSongIndex(nextSongIndex);
+      setAudioSource(nextSong);
+    }
+  };
+
+  // ⭐ AUDIO LOAD (same as reference)
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio || !audioSource) return;
+
+    let cancelled = false;
+
+    setIsAudioLoading(true);
+
+    audio.pause();
+    audio.src = audioSource;
+    audio.load();
+
+    const tryPlay = async () => {
+      if (cancelled) return;
+
+      try {
+        await audio.play();
+        setIsMusicPlaying(true);
+      } catch {
+        setIsMusicPlaying(false);
+      } finally {
+        setIsAudioLoading(false);
+      }
+    };
+
+    const onCanPlay = () => tryPlay();
+
+    audio.addEventListener("canplay", onCanPlay);
+
+    return () => {
+      cancelled = true;
+      audio.removeEventListener("canplay", onCanPlay);
+    };
+  }, [audioSource]);
+
+  // ⭐ torch (same as reference)
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const container = divRef.current;
+    const torch = torchRef.current;
+    if (!container || !torch) return;
+
+    const rect = container.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    if (firstMoveRef.current) {
+      firstMoveRef.current = false;
+      torch.style.opacity = "0.3";
+    }
+
+    torch.style.background = `
+      radial-gradient(450px circle at ${x}px ${y}px,
+      rgba(255,255,255,0.85),
+      rgba(255,255,255,0) 55%)
+    `;
+  };
+
+  const handleMouseEnter = () => {
+    if (torchRef.current) torchRef.current.style.opacity = "0.3";
+  };
+
+  const handleMouseLeave = () => {
+    firstMoveRef.current = true;
+    if (torchRef.current) torchRef.current.style.opacity = "0";
   };
 
   const buttonList = originalButtonList.map((button, index) => (
@@ -90,53 +188,9 @@ export default function ItsTooBad() {
     </li>
   ));
 
-  const toggleAudio = () => {
-    if (audioRef.current) {
-      if (audioRef.current.paused) {
-        audioRef.current.play();
-      } else {
-        audioRef.current.pause();
-      }
-      setIsMusicPlaying((prev) => !prev);
-    }
-  };
-
-  const handleSongEnd = () => {
-    const nextSongIndex = (songIndex + 1) % originalButtonList.length;
-    const nextSong = originalButtonList[nextSongIndex]?.song;
-    if (nextSong) {
-      setSongIndex(nextSongIndex);
-      setAudioSource(nextSong);
-    }
-  };
-
-  useEffect(() => {
-    if (audioSource && audioRef.current) {
-      audioRef.current.load();
-      audioRef.current.play().catch(() => {});
-    }
-  }, [audioSource]);
-
-  const handleLoadStart = () => {
-    if (loadingTimeoutRef.current) clearTimeout(loadingTimeoutRef.current);
-    loadingTimeoutRef.current = setTimeout(() => {
-      setIsAudioLoading(true);
-    }, 200);
-  };
-
-  const handleCanPlayThrough = () => {
-    if (loadingTimeoutRef.current) clearTimeout(loadingTimeoutRef.current);
-    setIsAudioLoading(false);
-  };
-
-  const handleAudioError = () => {
-    if (loadingTimeoutRef.current) clearTimeout(loadingTimeoutRef.current);
-    setIsAudioLoading(false);
-  };
-
   return (
     <>
-      {/* ⭐ SOFT LOADING OVERLAY */}
+      {/* LOADING */}
       <div
         className={`fixed inset-0 z-50 flex items-center justify-center bg-black transition-opacity duration-700 ${
           isAppLoading ? "opacity-100" : "opacity-0 pointer-events-none"
@@ -146,60 +200,25 @@ export default function ItsTooBad() {
       </div>
 
       <div
-        id="mainDiv"
         ref={divRef}
-        className="w-full h-screen bg-[#f8f8f8] relative"
-        style={{
-          backgroundImage: `url(${bgMain})`,
-          backgroundSize: "cover",
-          backgroundRepeat: "no-repeat",
-          backgroundPosition: "center",
-        }}
-        onMouseMove={(e) => {
-          const div = divRef.current;
-          if (!div) return;
-
-          const rect = div.getBoundingClientRect();
-          const x = e.clientX - rect.left;
-          const y = e.clientY - rect.top;
-
-          if (firstMoveRef.current) {
-            firstMoveRef.current = false;
-            setOpacity(0.3);
-          }
-
-          setPosition({ x, y });
-        }}
-        onMouseEnter={(e) => {
-          const div = divRef.current;
-          if (!div) return;
-
-          const rect = div.getBoundingClientRect();
-          const x = e.clientX - rect.left;
-          const y = e.clientY - rect.top;
-
-          setPosition({ x, y });
-          setOpacity(0.3);
-        }}
-        onMouseLeave={() => {
-          firstMoveRef.current = true;
-          setOpacity(0);
-        }}
+        onMouseMove={handleMouseMove}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        className="w-full h-screen relative overflow-hidden"
       >
-        {/* TORCH */}
-        <div
-          ref={torchRef}
-          className="pointer-events-none absolute inset-0 transition duration-300"
-          style={{
-            opacity,
-            background: `radial-gradient(400px circle at ${position.x}px ${position.y}px,
-              rgba(255,255,255,0.8),
-              rgba(255,255,255,0) 50%)`,
-          }}
+        <img
+          src={bgMain}
+          className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+          alt=""
         />
 
-        {/* NAV */}
-        <div className="header flex justify-center items-center py-4">
+        <div
+          ref={torchRef}
+          className="pointer-events-none absolute inset-0 transition-opacity duration-150"
+          style={{ opacity: 0 }}
+        />
+
+        <div className="header flex justify-center items-center py-4 relative">
           <Navbar
             isMusicPlaying={isMusicPlaying}
             onPlayPause={toggleAudio}
@@ -207,21 +226,23 @@ export default function ItsTooBad() {
           />
         </div>
 
-        {/* MAIN */}
-        <div className="flex flex-col items-center h-full space-y-3 -mt-6">
-          <div className="relative min-h-[290px] min-w-[290px] max-h-[290px] max-w-[290px] border-2 border-solid border-gray-800 p-4 mt-4 sm:mt-11 flex-shrink-0 shadow-md bg-[#fef8f2]">
+        <div className="flex flex-col items-center h-full space-y-3 -mt-6 relative z-10">
+          {/* CLICKABLE COVER */}
+          <div
+            onClick={toggleFold}
+            className="relative min-h-[290px] min-w-[290px] max-h-[290px] max-w-[290px] border-2 border-gray-800 p-4 mt-4 sm:mt-11 shadow-md cursor-pointer bg-[#fef8f2]"
+          >
             <div className="h-full w-full bg-cover" style={coverAttheEnd}></div>
 
             {isAudioLoading && (
-              <div className="absolute inset-0 flex items-center justify-center bg-[#fef8f280] transition-opacity duration-300">
+              <div className="absolute inset-0 flex items-center justify-center bg-[#fef8f280]">
                 <div className="loading loading-ring loading-lg text-black"></div>
               </div>
             )}
           </div>
 
-          <div className="mt-2">
-            <ButtonFold />
-          </div>
+          {/* BUTTON */}
+          <ButtonFold isOpen={isFoldOpen} onClick={toggleFold} />
 
           <div
             id="foldOut"
@@ -235,20 +256,16 @@ export default function ItsTooBad() {
         </div>
 
         {/* AUDIO */}
-        <footer className="h-0 bg-white">
+        <footer className="bg-white w-full">
           <div className="audio-player hidden fixed bottom-0 left-0 right-0 p-4 bg-white shadow-lg">
             <audio
               ref={audioRef}
               controls
-              preload="metadata"
               src={audioSource || undefined}
-              autoPlay={isMusicPlaying}
+              preload="auto"
               onPlay={() => setIsMusicPlaying(true)}
               onPause={() => setIsMusicPlaying(false)}
               onEnded={handleSongEnd}
-              onLoadStart={handleLoadStart}
-              onCanPlayThrough={handleCanPlayThrough}
-              onError={handleAudioError}
             />
           </div>
         </footer>
