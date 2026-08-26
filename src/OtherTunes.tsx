@@ -60,7 +60,7 @@ const OtherTunes = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [opacity, setOpacity] = useState(0);
 
-  //preload bg
+  //preload bg and set audio player with marshmallow man
   useEffect(() => {
     const img = new Image();
     img.src = bgMain;
@@ -185,7 +185,6 @@ const OtherTunes = () => {
 
   return (
     <>
-      {/* ⭐ SOFT PAGE LOADER */}
       <div
         className={`fixed inset-0 z-50 flex items-center justify-center bg-black transition-opacity duration-700 ${
           isAppLoading ? "opacity-100" : "opacity-0 pointer-events-none"

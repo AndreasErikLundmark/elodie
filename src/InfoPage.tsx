@@ -58,7 +58,7 @@ export default function InfoPage() {
             never properly released.
           </p>
           <br />
-          <p>Thank you for listening! now & then</p>
+          <p>Thank you for listening!</p>
           <br />
           <ul>
             Members:

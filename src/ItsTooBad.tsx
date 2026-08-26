@@ -53,7 +53,7 @@ export default function ItsTooBad() {
     backgroundSize: "cover",
   };
 
-  // ⭐ preload bg
+  // preload bg load audio player
   useEffect(() => {
     const img = new Image();
     img.src = bgMain;
