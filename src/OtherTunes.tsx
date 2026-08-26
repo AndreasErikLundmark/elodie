@@ -49,7 +49,6 @@ const OtherTunes = () => {
   const [songIndex, setSongIndex] = useState<number>(-1);
   const [isAudioLoading, setIsAudioLoading] = useState(false);
 
-  // ⭐ NEW: page loading state
   const [isAppLoading, setIsAppLoading] = useState(true);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -61,7 +60,7 @@ const OtherTunes = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [opacity, setOpacity] = useState(0);
 
-  // ⭐ NEW: preload background
+  //preload bg
   useEffect(() => {
     const img = new Image();
     img.src = bgMain;
@@ -70,6 +69,11 @@ const OtherTunes = () => {
 
     img.onload = done;
     img.onerror = done;
+    setActiveButton(10);
+    setSongIndex(9);
+
+    setAudioSource(song10);
+    console.log("Andreas load print" + audioSource);
   }, []);
 
   const buttonList = originalButtonList.map((button) => (

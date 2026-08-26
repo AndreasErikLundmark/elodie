@@ -50,6 +50,7 @@ const App = () => {
 
     img.onload = handleLoad;
     img.onerror = handleLoad;
+    handleSelectSong(0); // loadsplayer with first song on pageload
   }, []);
 
   const toggleFold = () => {

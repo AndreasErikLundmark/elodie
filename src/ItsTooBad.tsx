@@ -60,6 +60,7 @@ export default function ItsTooBad() {
     const done = () => setIsAppLoading(false);
     img.onload = done;
     img.onerror = done;
+    handleSelectSong(0);
   }, []);
 
   // ⭐ SAME FOLDOUT LOGIC AS REFERENCE
