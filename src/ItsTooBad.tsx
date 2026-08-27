@@ -109,6 +109,7 @@ export default function ItsTooBad() {
     if (nextSong) {
       setSongIndex(nextSongIndex);
       setAudioSource(nextSong);
+      setIsMusicPlaying(true);
     }
   };
 

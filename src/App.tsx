@@ -98,6 +98,7 @@ const App = () => {
     if (nextSong) {
       setSongIndex(nextSongIndex);
       setAudioSource(nextSong);
+      setIsMusicPlaying(true);
     }
   };
 
