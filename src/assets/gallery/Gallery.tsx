@@ -27,7 +27,6 @@ const images = [
   p10,
   p16,
   p17,
-  p18,
   p19,
   p1,
   p11,
