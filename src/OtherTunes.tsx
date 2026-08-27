@@ -156,6 +156,7 @@ const OtherTunes = () => {
     if (nextSong) {
       setSongIndex(nextSongIndex);
       setAudioSource(nextSong);
+      setIsMusicPlaying(true);
     }
   };
 
