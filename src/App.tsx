@@ -50,7 +50,7 @@ const App = () => {
 
     img.onload = handleLoad;
     img.onerror = handleLoad;
-    handleSelectSong(0); // loadsplayer with first song on pageload
+    loadSongOnPageLoad(0); // loadsplayer with first song on pageload
   }, []);
 
   const toggleFold = () => {
@@ -64,6 +64,12 @@ const App = () => {
       element.classList.add("fade-in");
       setIsFoldOpen(true);
     }
+  };
+  const loadSongOnPageLoad = (index: number) => {
+    setActiveButton(originalButtonList[index].id);
+    setSongIndex(index);
+    setIsMusicPlaying(false);
+    setAudioSource(originalButtonList[index].song);
   };
 
   const handleSelectSong = (index: number) => {
@@ -98,7 +104,7 @@ const App = () => {
   // AUDIO LOAD
   useEffect(() => {
     const audio = audioRef.current;
-    if (!audio || !audioSource) return;
+    if (!audio || !audioSource || !isMusicPlaying) return;
 
     let cancelled = false;
 

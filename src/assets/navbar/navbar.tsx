@@ -29,15 +29,7 @@ export default function Navbar({
       <div className="relative flex justify-between items-center py-4 px-8">
         {/* Play/Pause Button */}
         {onPlayPause && (
-          <button
-            onClick={onPlayPause}
-            className={`text-xl ${
-              audioSource === null
-                ? "text-white opacity-80 cursor-not-allowed"
-                : ""
-            }`}
-            disabled={audioSource === null}
-          >
+          <button onClick={onPlayPause} className="text-xl text-white">
             {isMusicPlaying ? <FaPauseCircle /> : <FaCirclePlay />}
           </button>
         )}

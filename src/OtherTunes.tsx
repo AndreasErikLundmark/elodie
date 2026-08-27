@@ -73,7 +73,7 @@ const OtherTunes = () => {
     setSongIndex(9);
 
     setAudioSource(song10);
-    console.log("Andreas load print" + audioSource);
+    setIsMusicPlaying(false);
   }, []);
 
   const buttonList = originalButtonList.map((button) => (
@@ -160,7 +160,7 @@ const OtherTunes = () => {
   };
 
   useEffect(() => {
-    if (audioSource && audioRef.current) {
+    if (audioSource && audioRef.current && isMusicPlaying) {
       audioRef.current.load();
       audioRef.current.play();
     }

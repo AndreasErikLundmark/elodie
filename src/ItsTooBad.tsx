@@ -60,10 +60,9 @@ export default function ItsTooBad() {
     const done = () => setIsAppLoading(false);
     img.onload = done;
     img.onerror = done;
-    handleSelectSong(0);
+    loadSongOnPageLoad(0);
   }, []);
 
-  // ⭐ SAME FOLDOUT LOGIC AS REFERENCE
   const toggleFold = () => {
     const element = document.getElementById("foldOut");
     if (!element) return;
@@ -75,6 +74,13 @@ export default function ItsTooBad() {
       element.classList.add("fade-in");
       setIsFoldOpen(true);
     }
+  };
+
+  const loadSongOnPageLoad = (index: number) => {
+    setActiveButton(originalButtonList[index].id);
+    setSongIndex(index);
+    setIsMusicPlaying(false);
+    setAudioSource(originalButtonList[index].song);
   };
 
   const handleSelectSong = (index: number) => {
@@ -106,10 +112,10 @@ export default function ItsTooBad() {
     }
   };
 
-  // ⭐ AUDIO LOAD (same as reference)
+  // handle loading audio
   useEffect(() => {
     const audio = audioRef.current;
-    if (!audio || !audioSource) return;
+    if (!audio || !audioSource || !isMusicPlaying) return;
 
     let cancelled = false;
 
