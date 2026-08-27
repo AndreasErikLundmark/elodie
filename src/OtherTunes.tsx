@@ -73,7 +73,7 @@ const OtherTunes = () => {
     setSongIndex(9);
 
     setAudioSource(song10);
-    setIsMusicPlaying(false);
+    setIsMusicPlaying(false); // stop loaded music from playing
   }, []);
 
   const buttonList = originalButtonList.map((button) => (
